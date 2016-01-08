@@ -18,13 +18,15 @@
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mML-sL-qdi">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Email" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mML-sL-qdi">
                                 <rect key="frame" x="67" y="285" width="466" height="30"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.5" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
-                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AlV-l8-idg">
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Password" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AlV-l8-idg">
                                 <rect key="frame" x="67" y="329" width="466" height="30"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="0.51664870689655173" colorSpace="calibratedRGB"/>
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits"/>
                             </textField>
@@ -92,6 +94,13 @@
                             <constraint firstItem="AlV-l8-idg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="47" id="yI1-AD-ih1"/>
                         </constraints>
                     </view>
+                    <connections>
+                        <outlet property="emailTextField" destination="mML-sL-qdi" id="Her-VD-g2v"/>
+                        <outlet property="facebookLoginButton" destination="KEx-3n-X0h" id="g6H-dm-WRu"/>
+                        <outlet property="loginButton" destination="v5p-x7-bwy" id="eH7-ma-JWV"/>
+                        <outlet property="passwordTextField" destination="AlV-l8-idg" id="4fX-qt-zXA"/>
+                        <outlet property="signupButton" destination="YeY-f5-MW9" id="Mkl-DR-HA9"/>
+                    </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
