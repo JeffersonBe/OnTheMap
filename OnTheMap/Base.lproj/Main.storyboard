@@ -1,13 +1,15 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="6211" systemVersion="14A298i" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
-        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="6204"/>
+        <deployment identifier="iOS"/>
+        <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
+        <capability name="Constraints to layout margins" minToolsVersion="6.0"/>
     </dependencies>
     <scenes>
         <!--View Controller-->
         <scene sceneID="tne-QT-ifu">
             <objects>
-                <viewController id="BYZ-38-t0r" customClass="ViewController" customModuleProvider="target" sceneMemberID="viewController">
+                <viewController id="BYZ-38-t0r" customClass="ViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
                     <layoutGuides>
                         <viewControllerLayoutGuide type="top" id="y3c-jy-aDJ"/>
                         <viewControllerLayoutGuide type="bottom" id="wfy-db-euE"/>
@@ -15,11 +17,89 @@
                     <view key="view" contentMode="scaleToFill" id="8bC-Xf-vdC">
                         <rect key="frame" x="0.0" y="0.0" width="600" height="600"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
-                        <color key="backgroundColor" white="1" alpha="1" colorSpace="custom" customColorSpace="calibratedWhite"/>
+                        <subviews>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="mML-sL-qdi">
+                                <rect key="frame" x="67" y="285" width="466" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="AlV-l8-idg">
+                                <rect key="frame" x="67" y="329" width="466" height="30"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="14"/>
+                                <textInputTraits key="textInputTraits"/>
+                            </textField>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="KEx-3n-X0h">
+                                <rect key="frame" x="67" y="535" width="466" height="45"/>
+                                <color key="backgroundColor" red="0.23529411764705882" green="0.3529411764705882" blue="0.58039215686274503" alpha="1" colorSpace="calibratedRGB"/>
+                                <state key="normal" title="Log in with Facebook">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="YeY-f5-MW9">
+                                <rect key="frame" x="67" y="430" width="466" height="30"/>
+                                <state key="normal" title="Don't have an account? Sign Up">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                            <label opaque="NO" userInteractionEnabled="NO" contentMode="left" horizontalHuggingPriority="251" verticalHuggingPriority="251" text="Login to Udacity" textAlignment="natural" lineBreakMode="tailTruncation" baselineAdjustment="alignBaselines" adjustsFontSizeToFit="NO" translatesAutoresizingMaskIntoConstraints="NO" id="LuP-Xj-HF8">
+                                <rect key="frame" x="238" y="249" width="125" height="21"/>
+                                <fontDescription key="fontDescription" type="system" pointSize="17"/>
+                                <color key="textColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                <nil key="highlightedColor"/>
+                            </label>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UdacityLogo" translatesAutoresizingMaskIntoConstraints="NO" id="ddb-M6-EyK">
+                                <rect key="frame" x="238" y="79" width="125" height="137"/>
+                            </imageView>
+                            <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="FacebookIcon" translatesAutoresizingMaskIntoConstraints="NO" id="BDU-z0-QHi">
+                                <rect key="frame" x="78" y="545" width="25" height="25"/>
+                            </imageView>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5p-x7-bwy">
+                                <rect key="frame" x="67" y="377" width="466" height="45"/>
+                                <color key="backgroundColor" red="0.85490196078431369" green="0.36078431372549019" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="height" constant="45" id="sKD-2W-B3J"/>
+                                </constraints>
+                                <state key="normal" title="Log in with Facebook">
+                                    <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
+                                </state>
+                            </button>
+                        </subviews>
+                        <color key="backgroundColor" red="1" green="0.5" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                        <constraints>
+                            <constraint firstItem="wfy-db-euE" firstAttribute="top" secondItem="KEx-3n-X0h" secondAttribute="bottom" constant="20" id="0gG-EY-Ih0"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="KEx-3n-X0h" secondAttribute="trailing" constant="47" id="1CM-zk-9aF"/>
+                            <constraint firstItem="KEx-3n-X0h" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="47" id="3jv-T9-F22"/>
+                            <constraint firstItem="BDU-z0-QHi" firstAttribute="top" secondItem="KEx-3n-X0h" secondAttribute="bottom" constant="-35" id="4t5-ov-3Af"/>
+                            <constraint firstItem="mML-sL-qdi" firstAttribute="top" secondItem="LuP-Xj-HF8" secondAttribute="bottom" constant="15" id="5PB-Ql-huA"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="YeY-f5-MW9" secondAttribute="trailing" constant="47" id="65G-Fe-hKr"/>
+                            <constraint firstItem="YeY-f5-MW9" firstAttribute="top" secondItem="v5p-x7-bwy" secondAttribute="bottom" constant="8" id="Aaf-0S-DfS"/>
+                            <constraint firstItem="ddb-M6-EyK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Cw6-YP-Tql"/>
+                            <constraint firstItem="LuP-Xj-HF8" firstAttribute="top" secondItem="ddb-M6-EyK" secondAttribute="bottom" constant="33" id="Ith-gR-eFA"/>
+                            <constraint firstItem="v5p-x7-bwy" firstAttribute="top" secondItem="AlV-l8-idg" secondAttribute="bottom" constant="18" id="K1e-ce-hZ7"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="v5p-x7-bwy" secondAttribute="trailing" constant="47" id="Llz-5Q-FF7"/>
+                            <constraint firstItem="ddb-M6-EyK" firstAttribute="top" secondItem="y3c-jy-aDJ" secondAttribute="bottom" constant="59" id="Qfd-xb-6zA"/>
+                            <constraint firstItem="mML-sL-qdi" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="47" id="T5k-DT-XB9"/>
+                            <constraint firstItem="YeY-f5-MW9" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="47" id="VeE-tU-oqK"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="AlV-l8-idg" secondAttribute="trailing" constant="47" id="Y8e-Uf-Pdk"/>
+                            <constraint firstItem="AlV-l8-idg" firstAttribute="top" secondItem="mML-sL-qdi" secondAttribute="bottom" constant="14" id="ZJs-Rm-AVq"/>
+                            <constraint firstItem="BDU-z0-QHi" firstAttribute="centerY" secondItem="KEx-3n-X0h" secondAttribute="centerY" id="a4q-GC-bPb"/>
+                            <constraint firstItem="LuP-Xj-HF8" firstAttribute="centerX" secondItem="ddb-M6-EyK" secondAttribute="centerX" id="bcZ-W3-t0i"/>
+                            <constraint firstItem="v5p-x7-bwy" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="47" id="fYi-0o-tlc"/>
+                            <constraint firstItem="KEx-3n-X0h" firstAttribute="leading" secondItem="BDU-z0-QHi" secondAttribute="trailing" constant="-36" id="jkV-gH-nMb"/>
+                            <constraint firstItem="BDU-z0-QHi" firstAttribute="top" secondItem="KEx-3n-X0h" secondAttribute="bottom" constant="-35" id="kI2-0U-ST6"/>
+                            <constraint firstAttribute="trailingMargin" secondItem="mML-sL-qdi" secondAttribute="trailing" constant="47" id="kYd-DW-4wm"/>
+                            <constraint firstItem="KEx-3n-X0h" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="xoo-YH-eny"/>
+                            <constraint firstItem="AlV-l8-idg" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="47" id="yI1-AD-ih1"/>
+                        </constraints>
                     </view>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="dkx-z0-nzr" sceneMemberID="firstResponder"/>
             </objects>
+            <point key="canvasLocation" x="305" y="387"/>
         </scene>
     </scenes>
+    <resources>
+        <image name="FacebookIcon" width="25" height="25"/>
+        <image name="UdacityLogo" width="125" height="137"/>
+    </resources>
 </document>
