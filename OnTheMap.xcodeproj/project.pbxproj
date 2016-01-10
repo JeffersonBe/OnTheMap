@@ -9,6 +9,8 @@
 /* Begin PBXBuildFile section */
 		B48B50DE1C42B651001ED7E1 /* OTMConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48B50DD1C42B651001ED7E1 /* OTMConstants.swift */; };
 		B48B50E01C42D511001ED7E1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48B50DF1C42D511001ED7E1 /* MapViewController.swift */; };
+		B48B50E21C42DC2C001ED7E1 /* OTMLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48B50E11C42DC2C001ED7E1 /* OTMLocation.swift */; };
+		B48B50E41C42EFFA001ED7E1 /* ParseClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48B50E31C42EFFA001ED7E1 /* ParseClient.swift */; };
 		B4A0A9EC1C427C8B002F0356 /* UdacityClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4A0A9EB1C427C8B002F0356 /* UdacityClient.swift */; };
 		B4AA859E1C3EF37D00807D01 /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AA859D1C3EF37D00807D01 /* AppDelegate.swift */; };
 		B4AA85A01C3EF37D00807D01 /* LoginViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4AA859F1C3EF37D00807D01 /* LoginViewController.swift */; };
@@ -20,6 +22,8 @@
 /* Begin PBXFileReference section */
 		B48B50DD1C42B651001ED7E1 /* OTMConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConstants.swift; sourceTree = "<group>"; };
 		B48B50DF1C42D511001ED7E1 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
+		B48B50E11C42DC2C001ED7E1 /* OTMLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMLocation.swift; sourceTree = "<group>"; };
+		B48B50E31C42EFFA001ED7E1 /* ParseClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = ParseClient.swift; sourceTree = "<group>"; };
 		B4A0A9EB1C427C8B002F0356 /* UdacityClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = UdacityClient.swift; sourceTree = "<group>"; };
 		B4AA859A1C3EF37D00807D01 /* OnTheMap.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = OnTheMap.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		B4AA859D1C3EF37D00807D01 /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
@@ -67,8 +71,10 @@
 				B4AA85A61C3EF37D00807D01 /* LaunchScreen.storyboard */,
 				B4AA85A91C3EF37D00807D01 /* Info.plist */,
 				B4A0A9EB1C427C8B002F0356 /* UdacityClient.swift */,
+				B48B50E31C42EFFA001ED7E1 /* ParseClient.swift */,
 				B48B50DD1C42B651001ED7E1 /* OTMConstants.swift */,
 				B48B50DF1C42D511001ED7E1 /* MapViewController.swift */,
+				B48B50E11C42DC2C001ED7E1 /* OTMLocation.swift */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -146,6 +152,8 @@
 			buildActionMask = 2147483647;
 			files = (
 				B4AA85A01C3EF37D00807D01 /* LoginViewController.swift in Sources */,
+				B48B50E21C42DC2C001ED7E1 /* OTMLocation.swift in Sources */,
+				B48B50E41C42EFFA001ED7E1 /* ParseClient.swift in Sources */,
 				B4AA859E1C3EF37D00807D01 /* AppDelegate.swift in Sources */,
 				B48B50DE1C42B651001ED7E1 /* OTMConstants.swift in Sources */,
 				B48B50E01C42D511001ED7E1 /* MapViewController.swift in Sources */,

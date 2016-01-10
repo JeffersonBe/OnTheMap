@@ -50,11 +50,6 @@ class UdacityClient: NSObject {
                     return
                 }
 
-//                guard let _ = parsedResult["error"] as? String else {
-//                    completionHandler(success: false, errorString: "There are error in your request")
-//                    return
-//                }
-
                 guard let registered = parsedResult["account"] as? NSDictionary else {
                     completionHandler(success: false, errorString: "No user have been found")
                     return
