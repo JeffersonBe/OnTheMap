@@ -31,7 +31,7 @@ class UdacityClient: NSObject {
 
     // Login to Udacity with user-supplied credentials
     func loginAndCreateSession(completionHandler: (success: Bool, errorString: String?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: Constants.AuthorizationURL + Methods.AuthenticationSessionNew )!)
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
@@ -70,7 +70,7 @@ class UdacityClient: NSObject {
 
     // logout and destroy session
     func logoutAndDeleteSession(completionHandler: (success: Bool, errorString: String?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: Constants.AuthorizationURL + Methods.AuthenticationSessionNew )!)
         request.HTTPMethod = "DELETE"
         var xsrfCookie: NSHTTPCookie? = nil
         let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
