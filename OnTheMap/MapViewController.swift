@@ -14,15 +14,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     @IBOutlet weak var mapView: MKMapView!
     var locations: [OTMLocation] = [OTMLocation]()
 
-    override func didReceiveMemoryWarning() {
-        super.didReceiveMemoryWarning()
-        // Dispose of any resources that can be recreated.
-    }
-
-    override func viewWillAppear(animated: Bool) {
-        super.viewWillAppear(animated)
-    }
-
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
@@ -96,6 +87,17 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             let app = UIApplication.sharedApplication()
             if let link = annotationView.annotation?.subtitle {
                 app.openURL(NSURL(string: link!)!)
+            }
+        }
+    }
+
+    func logout(){
+        UdacityClient.sharedInstance().logoutAndDeleteSession { success, error in
+            if success {
+                dispatch_async(dispatch_get_main_queue()) {
+                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+                    self.presentViewController(controller, animated: true, completion: nil)
+                }
             }
         }
     }

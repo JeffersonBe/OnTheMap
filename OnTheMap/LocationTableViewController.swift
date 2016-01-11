@@ -77,4 +77,15 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
             }
         }
     }
+
+    func logout(){
+        UdacityClient.sharedInstance().logoutAndDeleteSession { success, error in
+            if success {
+                dispatch_async(dispatch_get_main_queue()) {
+                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+                    self.presentViewController(controller, animated: true, completion: nil)
+                }
+            }
+        }
+    }
 }
