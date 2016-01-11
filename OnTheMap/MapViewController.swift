@@ -21,55 +21,45 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+    }
 
+    override func viewDidLoad() {
+        super.viewDidLoad()
         ParseClient.sharedInstance().getLocations { success, locations, error in
             if let location = locations {
                 self.locations = location
                 dispatch_async(dispatch_get_main_queue()) {
                     self.mapView.reloadInputViews()
+                    self.populateMap(self.locations)
                 }
-
             } else {
                 print(error)
             }
         }
+        self.parentViewController!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Reply, target: self, action: "logoutButtonTouchUp")
     }
 
-    override func viewDidAppear(animated: Bool) {
+    func populateMap(locations: [OTMLocation]) {
         var annotations = [MKPointAnnotation]()
-
         for item in locations {
-            print(item)
-
-            // Notice that the float values are being used to create CLLocationDegree values.
-            // This is a version of the Double type.
             let lat = CLLocationDegrees(item.latitude)
             let long = CLLocationDegrees(item.longitude)
 
-            // The lat and long are used to create a CLLocationCoordinates2D instance.
             let coordinate = CLLocationCoordinate2D(latitude: lat, longitude: long)
 
             let first = item.firstName
             let last = item.lastName
             let mediaURL = item.mediaURL
 
-            //  we create the annotation and set its coordiate, title, and subtitle properties
             let annotation = MKPointAnnotation()
             annotation.coordinate = coordinate
             annotation.title = "\(first) \(last)"
             annotation.subtitle = mediaURL
 
-            // Finally we place the annotation in an array of annotations.
             annotations.append(annotation)
         }
 
-        // When the array is complete, we add the annotations to the map.
         self.mapView.addAnnotations(annotations)
-    }
-
-    override func viewDidLoad() {
-        super.viewDidLoad()
-        self.parentViewController!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Reply, target: self, action: "logoutButtonTouchUp")
     }
 
     // MARK: - MKMapViewDelegate
