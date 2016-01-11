@@ -25,6 +25,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        mapView.delegate = self
         ParseClient.sharedInstance().getLocations { success, locations, error in
             if let location = locations {
                 self.locations = location
@@ -36,7 +37,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 print(error)
             }
         }
-        self.parentViewController!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Reply, target: self, action: "logoutButtonTouchUp")
+        parentViewController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: "logout")
+        parentViewController?.navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Add", style: .Plain, target: self, action: "logout"), UIBarButtonItem(title: "Refresh", style: .Plain, target: self, action: "logout")]
     }
 
     func populateMap(locations: [OTMLocation]) {
@@ -70,14 +72,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
 
         let reuseId = "pin"
-
         var pinView = mapView.dequeueReusableAnnotationViewWithIdentifier(reuseId) as? MKPinAnnotationView
-
         if pinView == nil {
             pinView = MKPinAnnotationView(annotation: annotation, reuseIdentifier: reuseId)
             pinView!.canShowCallout = true
             pinView!.pinTintColor = UIColor.redColor()
-            pinView!.rightCalloutAccessoryView = UIButton(type: .DetailDisclosure)
+            let button = UIButton(type: UIButtonType.DetailDisclosure)
+            pinView?.rightCalloutAccessoryView = button
         }
         else {
             pinView!.annotation = annotation
@@ -93,7 +94,9 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
         if control == annotationView.rightCalloutAccessoryView {
             let app = UIApplication.sharedApplication()
-            app.openURL(NSURL(string: annotationView.annotation!.description)!)
+            if let link = annotationView.annotation?.subtitle {
+                app.openURL(NSURL(string: link!)!)
+            }
         }
     }
 }
