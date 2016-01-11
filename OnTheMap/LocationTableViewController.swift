@@ -28,7 +28,11 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
                 print(error)
             }
         }
-        self.parentViewController!.navigationItem.leftBarButtonItem = UIBarButtonItem(barButtonSystemItem: .Reply, target: self, action: "logoutButtonTouchUp")
+        parentViewController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: "logout")
+        parentViewController?.navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Add", style: .Plain, target: self, action: "logout"), UIBarButtonItem(title: "Refresh", style: .Plain, target: self, action: "logout")]
+        let refreshControl = UIRefreshControl()
+        refreshControl.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        table.addSubview(refreshControl)
     }
     
     // MARK: UITableViewController
@@ -57,5 +61,20 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
 //        let controller = self.storyboard!.instantiateViewControllerWithIdentifier("MovieDetailViewController") as! MovieDetailViewController
 //        controller.movie = movies[indexPath.row]
 //        self.navigationController!.pushViewController(controller, animated: true)
+    }
+
+    func handleRefresh(refreshControl: UIRefreshControl) {
+        ParseClient.sharedInstance().getLocations { success, locations, error in
+            if let location = locations {
+                self.locations = location
+                print(self.locations)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.table.reloadData()
+                    refreshControl.endRefreshing()
+                }
+            } else {
+                print(error)
+            }
+        }
     }
 }
