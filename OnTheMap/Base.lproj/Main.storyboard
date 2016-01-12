@@ -100,6 +100,7 @@
                     <connections>
                         <outlet property="emailTextField" destination="mML-sL-qdi" id="Her-VD-g2v"/>
                         <outlet property="facebookLoginButton" destination="KEx-3n-X0h" id="g6H-dm-WRu"/>
+                        <outlet property="informationLabel" destination="LuP-Xj-HF8" id="slB-ld-snc"/>
                         <outlet property="loginButton" destination="v5p-x7-bwy" id="eH7-ma-JWV"/>
                         <outlet property="passwordTextField" destination="AlV-l8-idg" id="4fX-qt-zXA"/>
                         <outlet property="signupButton" destination="YeY-f5-MW9" id="Mkl-DR-HA9"/>

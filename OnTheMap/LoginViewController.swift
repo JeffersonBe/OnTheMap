@@ -15,6 +15,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var facebookLoginButton: UIButton!
+    @IBOutlet weak var informationLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -32,6 +33,17 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
         return false
     }
     @IBAction func login(sender: AnyObject) {
+
+        guard emailTextField.text != "" else {
+            informationLabel.textColor = UIColor.redColor()
+            informationLabel.text = "Please enter your email"
+            return
+        }
+        guard passwordTextField.text != "" else {
+            informationLabel.textColor = UIColor.redColor()
+            informationLabel.text = "Please enter your password"
+            return
+        }
         UdacityClient.sharedInstance().username = emailTextField.text!
         UdacityClient.sharedInstance().password = passwordTextField.text!
         UdacityClient.sharedInstance().loginAndCreateSession() { (success, errorString) in

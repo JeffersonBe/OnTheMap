@@ -51,7 +51,7 @@ class UdacityClient: NSObject {
                 }
 
                 guard let registered = parsedResult["account"] as? NSDictionary else {
-                    completionHandler(success: false, errorString: "No user have been found")
+                    completionHandler(success: false, errorString: "Wrong email or password")
                     return
                 }
 
