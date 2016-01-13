@@ -22,7 +22,7 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
         refreshLocation()
 
         let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: "refreshLocation:", forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl.addTarget(self, action: "refreshLocation", forControlEvents: UIControlEvents.ValueChanged)
         table.addSubview(refreshControl)
     }
     
@@ -39,7 +39,6 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
         cell.textLabel?.text = "\(location.firstName) \(location.lastName)"
         cell.detailTextLabel?.text = location.mediaURL
         return cell
-
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
