@@ -28,8 +28,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 print(error)
             }
         }
-        parentViewController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: "logout")
-        parentViewController?.navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Add", style: .Plain, target: self, action: "logout"), UIBarButtonItem(title: "Refresh", style: .Plain, target: self, action: "logout")]
     }
 
     func populateMap(locations: [OTMLocation]) {
@@ -91,6 +89,20 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
 
+    func refreshLocation() {
+        ParseClient.sharedInstance().getLocations { success, locations, error in
+            if let location = locations {
+                self.locations = location
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.mapView.reloadInputViews()
+                    self.populateMap(self.locations)
+                }
+            } else {
+                print(error)
+            }
+        }
+    }
+
     func logout(){
         UdacityClient.sharedInstance().logoutAndDeleteSession { success, error in
             if success {
@@ -100,5 +112,10 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 }
             }
         }
+    }
+
+    func addLocation() {
+        let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController
+        self.presentViewController(controller, animated: true, completion: nil)
     }
 }

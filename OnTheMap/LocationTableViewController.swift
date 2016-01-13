@@ -18,20 +18,11 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
         super.viewDidLoad()
         table.delegate = self
         table.dataSource = self
-        ParseClient.sharedInstance().getLocations { success, locations, error in
-            if let location = locations {
-                self.locations = location
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.table.reloadData()
-                }
-            } else {
-                print(error)
-            }
-        }
-        parentViewController?.navigationItem.leftBarButtonItem = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: "logout")
-        parentViewController?.navigationItem.rightBarButtonItems = [UIBarButtonItem(title: "Add", style: .Plain, target: self, action: "logout"), UIBarButtonItem(title: "Refresh", style: .Plain, target: self, action: "logout")]
+
+        refreshLocation()
+
         let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: "handleRefresh:", forControlEvents: UIControlEvents.ValueChanged)
+        refreshControl.addTarget(self, action: "refreshLocation:", forControlEvents: UIControlEvents.ValueChanged)
         table.addSubview(refreshControl)
     }
     
@@ -61,30 +52,20 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
 //        let controller = self.storyboard!.instantiateViewControllerWithIdentifier("MovieDetailViewController") as! MovieDetailViewController
 //        controller.movie = movies[indexPath.row]
 //        self.navigationController!.pushViewController(controller, animated: true)
+        let location = locations[indexPath.row]
+        let app = UIApplication.sharedApplication()
+        app.openURL(NSURL(string: location.mediaURL)!)
     }
 
-    func handleRefresh(refreshControl: UIRefreshControl) {
+    func refreshLocation() {
         ParseClient.sharedInstance().getLocations { success, locations, error in
             if let location = locations {
                 self.locations = location
-                print(self.locations)
                 dispatch_async(dispatch_get_main_queue()) {
                     self.table.reloadData()
-                    refreshControl.endRefreshing()
                 }
             } else {
                 print(error)
-            }
-        }
-    }
-
-    func logout(){
-        UdacityClient.sharedInstance().logoutAndDeleteSession { success, error in
-            if success {
-                dispatch_async(dispatch_get_main_queue()) {
-                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
-                    self.presentViewController(controller, animated: true, completion: nil)
-                }
             }
         }
     }

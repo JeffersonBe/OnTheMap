@@ -18,6 +18,8 @@
 		B4AA85A31C3EF37D00807D01 /* Main.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4AA85A11C3EF37D00807D01 /* Main.storyboard */; };
 		B4AA85A51C3EF37D00807D01 /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = B4AA85A41C3EF37D00807D01 /* Assets.xcassets */; };
 		B4AA85A81C3EF37D00807D01 /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = B4AA85A61C3EF37D00807D01 /* LaunchScreen.storyboard */; };
+		B4B4AD6A1C4504AD00811E3F /* InformationPostingViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B4AD691C4504AD00811E3F /* InformationPostingViewController.swift */; };
+		B4B4AD6C1C45667600811E3F /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B4AD6B1C45667600811E3F /* TabBarViewController.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -34,6 +36,8 @@
 		B4AA85A41C3EF37D00807D01 /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		B4AA85A71C3EF37D00807D01 /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		B4AA85A91C3EF37D00807D01 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		B4B4AD691C4504AD00811E3F /* InformationPostingViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = InformationPostingViewController.swift; sourceTree = "<group>"; };
+		B4B4AD6B1C45667600811E3F /* TabBarViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = TabBarViewController.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -78,6 +82,8 @@
 				B48B50DF1C42D511001ED7E1 /* MapViewController.swift */,
 				B48B50E11C42DC2C001ED7E1 /* OTMLocation.swift */,
 				B48B50E51C431429001ED7E1 /* LocationTableViewController.swift */,
+				B4B4AD691C4504AD00811E3F /* InformationPostingViewController.swift */,
+				B4B4AD6B1C45667600811E3F /* TabBarViewController.swift */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";
@@ -160,7 +166,9 @@
 				B48B50E61C431429001ED7E1 /* LocationTableViewController.swift in Sources */,
 				B4AA859E1C3EF37D00807D01 /* AppDelegate.swift in Sources */,
 				B48B50DE1C42B651001ED7E1 /* OTMConstants.swift in Sources */,
+				B4B4AD6A1C4504AD00811E3F /* InformationPostingViewController.swift in Sources */,
 				B48B50E01C42D511001ED7E1 /* MapViewController.swift in Sources */,
+				B4B4AD6C1C45667600811E3F /* TabBarViewController.swift in Sources */,
 				B4A0A9EC1C427C8B002F0356 /* UdacityClient.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
