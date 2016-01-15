@@ -46,11 +46,6 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-
-        /* Push the movie detail view */
-//        let controller = self.storyboard!.instantiateViewControllerWithIdentifier("MovieDetailViewController") as! MovieDetailViewController
-//        controller.movie = movies[indexPath.row]
-//        self.navigationController!.pushViewController(controller, animated: true)
         let location = locations[indexPath.row]
         let app = UIApplication.sharedApplication()
         app.openURL(NSURL(string: location.mediaURL)!)

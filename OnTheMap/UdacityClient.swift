@@ -14,12 +14,10 @@ class UdacityClient: NSObject {
 
     var username: String = ""
     var password: String = ""
-    var uniqueID: String = ""
+    var uniqueKey: String = ""
     var userFirstName: String = ""
     var userLastName: String = ""
-
     var session: NSURLSession
-    var completionHandler : ((success: Bool, errorString: String?) -> Void)? = nil
 
     override init() {
         let config = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -31,11 +29,12 @@ class UdacityClient: NSObject {
 
     // Login to Udacity with user-supplied credentials
     func loginAndCreateSession(completionHandler: (success: Bool, errorString: String?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: Constants.AuthorizationURL + Methods.AuthenticationSessionNew )!)
+        let request = NSMutableURLRequest(URL: NSURL(string: OTMConstants.Constants.AuthorizationURL + OTMConstants.Methods.AuthenticationSessionNew )!)
         request.HTTPMethod = "POST"
         request.addValue("application/json", forHTTPHeaderField: "Accept")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.HTTPBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
+        
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil {
                 completionHandler(success: false, errorString: "The internet connection appears to be offline")
@@ -55,7 +54,7 @@ class UdacityClient: NSObject {
                     return
                 }
 
-                self.uniqueID = registered["key"] as! String
+                self.uniqueKey = registered["key"] as! String
                 self.getUserData()
                 completionHandler(success: true, errorString: nil)
             }
@@ -65,7 +64,7 @@ class UdacityClient: NSObject {
 
     // logout and destroy session
     func logoutAndDeleteSession(completionHandler: (success: Bool, errorString: String?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: Constants.AuthorizationURL + Methods.AuthenticationSessionNew )!)
+        let request = NSMutableURLRequest(URL: NSURL(string: OTMConstants.Constants.AuthorizationURL + OTMConstants.Methods.AuthenticationSessionNew )!)
         request.HTTPMethod = "DELETE"
         var xsrfCookie: NSHTTPCookie? = nil
         let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
@@ -100,7 +99,7 @@ class UdacityClient: NSObject {
 
     // get user first name and last name
     func getUserData() {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/\(uniqueID)")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/\(uniqueKey)")!)
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil {
                 return

@@ -25,16 +25,16 @@ struct OTMLocation {
 
     /* Construct a TMDBMovie from a dictionary */
     init(dictionary: [String : AnyObject]) {
-        createdAt = dictionary[UdacityClient.JSONResponseKeys.createdAt] as! String
-        firstName = dictionary[UdacityClient.JSONResponseKeys.firstName] as! String
-        lastName = dictionary[UdacityClient.JSONResponseKeys.lastName] as! String
-        latitude = dictionary[UdacityClient.JSONResponseKeys.latitude] as! Double
-        longitude = dictionary[UdacityClient.JSONResponseKeys.longitude] as! Double
-        mapString = dictionary[UdacityClient.JSONResponseKeys.mapString] as! String
-        mediaURL = dictionary[UdacityClient.JSONResponseKeys.mediaURL] as! String
-        objectId = dictionary[UdacityClient.JSONResponseKeys.objectId] as! String
-        uniqueKey = dictionary[UdacityClient.JSONResponseKeys.uniqueKey] as! String
-        updatedAt = dictionary[UdacityClient.JSONResponseKeys.updatedAt] as! String
+        createdAt = dictionary[OTMConstants.JSONResponseKeys.createdAt] as! String
+        firstName = dictionary[OTMConstants.JSONResponseKeys.firstName] as! String
+        lastName = dictionary[OTMConstants.JSONResponseKeys.lastName] as! String
+        latitude = dictionary[OTMConstants.JSONResponseKeys.latitude] as! Double
+        longitude = dictionary[OTMConstants.JSONResponseKeys.longitude] as! Double
+        mapString = dictionary[OTMConstants.JSONResponseKeys.mapString] as! String
+        mediaURL = dictionary[OTMConstants.JSONResponseKeys.mediaURL] as! String
+        objectId = dictionary[OTMConstants.JSONResponseKeys.objectId] as! String
+        uniqueKey = dictionary[OTMConstants.JSONResponseKeys.uniqueKey] as! String
+        updatedAt = dictionary[OTMConstants.JSONResponseKeys.updatedAt] as! String
     }
 
     /* Helper: Given an array of dictionaries, convert them to an array of TMDBMovie objects */

@@ -8,7 +8,7 @@
 
 import Foundation
 
-extension UdacityClient {
+class OTMConstants: NSObject {
 
     // MARK: Constants
     struct Constants {
