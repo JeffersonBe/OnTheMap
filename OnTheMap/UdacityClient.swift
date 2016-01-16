@@ -12,12 +12,13 @@ class UdacityClient: NSObject {
 
     // MARK: - Variables
 
-    var username: String = ""
-    var password: String = ""
-    var uniqueKey: String = ""
-    var userFirstName: String = ""
-    var userLastName: String = ""
+    var username = ""
+    var password = ""
+    var uniqueKey = ""
+    var userFirstName = ""
+    var userLastName = ""
     var session: NSURLSession
+    var facebookAccessToken = ""
 
     override init() {
         let config = NSURLSessionConfiguration.defaultSessionConfiguration()
@@ -121,6 +122,40 @@ class UdacityClient: NSObject {
 
                 self.userFirstName = user["first_name"] as! String
                 self.userLastName = user["last_name"] as! String
+            }
+        }
+        task.resume()
+    }
+
+    func sessionWithFacebookAuthentication(completionHandler: (success: Bool, errorString: String?) -> Void) {
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
+        request.HTTPMethod = "POST"
+        request.addValue("application/json", forHTTPHeaderField: "Accept")
+        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        request.HTTPBody = "{\"facebook_mobile\": {\"access_token\": \"\(facebookAccessToken)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
+        let session = NSURLSession.sharedSession()
+        let task = session.dataTaskWithRequest(request) { data, response, error in
+            if error != nil {
+                completionHandler(success: false, errorString: "The internet connection appears to be offline")
+            } else {
+                let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5))
+                let parsedResult: AnyObject!
+                do {
+                    parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
+                } catch {
+                    parsedResult = nil
+                    print("Could not parse the data as JSON: '\(data)'")
+                    return
+                }
+                
+                guard let registered = parsedResult["account"] as? NSDictionary else {
+                    completionHandler(success: false, errorString: "Wrong email or password")
+                    return
+                }
+
+                self.uniqueKey = registered["key"] as! String
+                self.getUserData()
+                completionHandler(success: true, errorString: nil)
             }
         }
         task.resume()
