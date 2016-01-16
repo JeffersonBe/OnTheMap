@@ -8,6 +8,7 @@
 
 import Foundation
 import UIKit
+import FBSDKLoginKit
 
 class TabBarViewController: UITabBarController {
 
@@ -22,6 +23,7 @@ class TabBarViewController: UITabBarController {
     }
 
     func logout(){
+        if UdacityClient.sharedInstance().facebookAccessToken == "" {
         UdacityClient.sharedInstance().logoutAndDeleteSession { success, error in
             if success {
                 dispatch_async(dispatch_get_main_queue()) {
@@ -30,6 +32,14 @@ class TabBarViewController: UITabBarController {
                 }
             }
         }
+        } else {
+            UdacityClient.sharedInstance().facebookAccessToken = ""
+            let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
+            fbLoginManager.logOut()
+            let loginViewController = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+            self.presentViewController(loginViewController, animated: true, completion: nil)
+        }
+
     }
 
     func handleRefresh() {

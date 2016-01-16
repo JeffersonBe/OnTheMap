@@ -7,6 +7,9 @@
 //
 
 import UIKit
+import FBSDKCoreKit
+import FBSDKLoginKit
+
 
 @UIApplicationMain
 class AppDelegate: UIResponder, UIApplicationDelegate {
@@ -16,7 +19,19 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(application: UIApplication, didFinishLaunchingWithOptions launchOptions: [NSObject: AnyObject]?) -> Bool {
         // Override point for customization after application launch.
+        FBSDKApplicationDelegate.sharedInstance().application(application, didFinishLaunchingWithOptions: launchOptions)
         return true
+    }
+
+    func application(application: UIApplication, openURL url: NSURL, sourceApplication: String?, annotation: AnyObject) -> Bool {
+        //Even though the Facebook SDK can make this determinitaion on its own,
+        //let's make sure that the facebook SDK only sees urls intended for it,
+        //facebook has enough info already!
+        let isFacebookURL = url.scheme != "" && url.scheme.hasPrefix("fb\(FBSDKSettings.appID())") && url.host == "authorize"
+        if isFacebookURL {
+            return FBSDKApplicationDelegate.sharedInstance().application(application, openURL: url, sourceApplication: sourceApplication, annotation: annotation)
+        }
+        return false
     }
 
     func applicationWillResignActive(application: UIApplication) {

@@ -7,20 +7,23 @@
 //
 
 import UIKit
+import FBSDKLoginKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButtonDelegate {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
     @IBOutlet weak var loginButton: UIButton!
     @IBOutlet weak var signupButton: UIButton!
-    @IBOutlet weak var facebookLoginButton: UIButton!
+    @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
     @IBOutlet weak var informationLabel: UILabel!
     
     override func viewDidLoad() {
         super.viewDidLoad()
         emailTextField.delegate = self
         passwordTextField.delegate = self
+        facebookLoginButton.delegate = self
+        facebookLoginButton.readPermissions = ["public_profile", "email"]
     }
 
     override func didReceiveMemoryWarning() {
@@ -65,5 +68,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate {
             let rootNavVC = self.storyboard!.instantiateViewControllerWithIdentifier("rootNavVC") as! UINavigationController
             self.presentViewController(rootNavVC, animated: true, completion: nil)
         })
+    }
+
+    // Facebook Delegate Methods
+
+    func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
+        UdacityClient.sharedInstance().facebookAccessToken = result.token.tokenString
+        UdacityClient.sharedInstance().sessionWithFacebookAuthentication() { success, errorString in
+            if success {
+                let rootNavVC = self.storyboard!.instantiateViewControllerWithIdentifier("rootNavVC") as! UINavigationController
+                self.presentViewController(rootNavVC, animated: true, completion: nil)
+            }
+        }
+    }
+
+    func loginButtonDidLogOut(loginButton: FBSDKLoginButton!) {
+        print("User Logged Out")
     }
 }

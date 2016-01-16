@@ -34,11 +34,6 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
         let cellReuseIdentifier = "locationCell"
         let location = locations[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier) as UITableViewCell!
-<<<<<<< Updated upstream
-
-        /* Set cell defaults */
-=======
->>>>>>> Stashed changes
         cell.textLabel?.text = "\(location.firstName) \(location.lastName)"
         cell.detailTextLabel?.text = location.mediaURL
         return cell
