@@ -217,7 +217,7 @@
             </objects>
             <point key="canvasLocation" x="1331" y="1734"/>
         </scene>
-        <!--Item 1-->
+        <!--Map-->
         <scene sceneID="rew-XT-Iwu">
             <objects>
                 <viewController storyboardIdentifier="viewList" id="ili-r1-AT1" customClass="MapViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
@@ -241,7 +241,7 @@
                             <constraint firstItem="k10-mK-UIe" firstAttribute="top" secondItem="XG7-de-85e" secondAttribute="bottom" id="pNJ-h8-bcX"/>
                         </constraints>
                     </view>
-                    <tabBarItem key="tabBarItem" title="Item 1" id="Q6m-xr-hOV"/>
+                    <tabBarItem key="tabBarItem" title="Map" image="MapsIcon" selectedImage="MapsIcon" id="Q6m-xr-hOV"/>
                     <connections>
                         <outlet property="mapView" destination="k10-mK-UIe" id="1xM-Mw-7qE"/>
                     </connections>
@@ -269,7 +269,7 @@
             </objects>
             <point key="canvasLocation" x="511" y="619"/>
         </scene>
-        <!--Item-->
+        <!--List-->
         <scene sceneID="5CK-pg-Noc">
             <objects>
                 <tableViewController id="C1L-qy-kjW" customClass="LocationTableViewController" customModule="OnTheMap" customModuleProvider="target" sceneMemberID="viewController">
@@ -299,7 +299,7 @@
                                             <color key="textColor" red="0.0" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
                                             <nil key="highlightedColor"/>
                                         </label>
-                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="B3F135EF-CB66-4F9C-AA64-A018CA4816F8" id="a1k-bH-taK">
+                                        <imageView opaque="NO" clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" image="0E5752A8-AF88-4E00-B73F-7E3C7199D9C8" id="a1k-bH-taK">
                                             <rect key="frame" x="15" y="0.0" width="39" height="43"/>
                                             <autoresizingMask key="autoresizingMask"/>
                                         </imageView>
@@ -312,7 +312,7 @@
                             <outlet property="delegate" destination="C1L-qy-kjW" id="4CE-If-D7E"/>
                         </connections>
                     </tableView>
-                    <tabBarItem key="tabBarItem" title="Item" id="NIb-yB-hJW"/>
+                    <tabBarItem key="tabBarItem" title="List" image="ListIconOutline" id="NIb-yB-hJW"/>
                     <connections>
                         <outlet property="table" destination="IbY-rh-6AG" id="C2Y-f6-Khi"/>
                     </connections>
@@ -323,7 +323,7 @@
         </scene>
     </scenes>
     <resources>
-        <image name="B3F135EF-CB66-4F9C-AA64-A018CA4816F8" width="125" height="137">
+        <image name="0E5752A8-AF88-4E00-B73F-7E3C7199D9C8" width="125" height="137">
             <mutableData key="keyedArchiveRepresentation">
 YnBsaXN0MDDUAQIDBAUGOjtYJHZlcnNpb25YJG9iamVjdHNZJGFyY2hpdmVyVCR0b3ASAAGGoK0HCBEW
 GxwgISgrLjQ3VSRudWxs1AkKCwwNDg8QViRjbGFzc1xOU0ltYWdlRmxhZ3NWTlNSZXBzV05TQ29sb3KA
@@ -1536,6 +1536,8 @@ uQABGcEAARnEAAEZyQABGdgAARncAAEZ4wABGesAARn4AAEZ/QABGf8AARoBAAEaBgABGg4AARoRAAEa
 FgABGh4AARohAAEaMwABGjYAARo7AAAAAAAABAEAAAAAAAAAPgAAAAAAAAAAAAAAAAABGj0
 </mutableData>
         </image>
+        <image name="ListIconOutline" width="44" height="44"/>
+        <image name="MapsIcon" width="29" height="22"/>
         <image name="UdacityLogo" width="125" height="137"/>
     </resources>
 </document>

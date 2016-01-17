@@ -15,7 +15,7 @@ class TabBarViewController: UITabBarController {
 
     override func viewDidLoad() {
         let logoutButton = UIBarButtonItem(title: "Logout", style: .Plain, target: self, action: "logout")
-        let addButton = UIBarButtonItem(barButtonSystemItem: .Add, target: self, action: "checkIfAlreadyPostLocation")
+        let addButton = UIBarButtonItem(image: UIImage(named: "PinIcon"), style: .Plain, target: self, action: "checkIfAlreadyPostLocation")
         let refreshButton = UIBarButtonItem(title: "Refresh", style: .Plain, target: self, action: "handleRefresh")
         let rightButtons = [refreshButton, addButton]
         navigationItem.rightBarButtonItems = rightButtons
