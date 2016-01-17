@@ -17,13 +17,14 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
     @IBOutlet weak var informationLabel: UILabel!
-    
+
     override func viewDidLoad() {
         super.viewDidLoad()
         emailTextField.delegate = self
         passwordTextField.delegate = self
         facebookLoginButton.delegate = self
         facebookLoginButton.readPermissions = ["public_profile", "email"]
+        UdacityClient.sharedInstance().facebookAccessToken = ""
     }
 
     override func didReceiveMemoryWarning() {
@@ -73,11 +74,21 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     // Facebook Delegate Methods
 
     func loginButton(loginButton: FBSDKLoginButton!, didCompleteWithResult result: FBSDKLoginManagerLoginResult!, error: NSError!) {
-        UdacityClient.sharedInstance().facebookAccessToken = result.token.tokenString
-        UdacityClient.sharedInstance().sessionWithFacebookAuthentication() { success, errorString in
-            if success {
-                let rootNavVC = self.storyboard!.instantiateViewControllerWithIdentifier("rootNavVC") as! UINavigationController
-                self.presentViewController(rootNavVC, animated: true, completion: nil)
+        if ((error) != nil) {
+            // Process error
+            print("Error")
+        }
+        else if result.isCancelled {
+            // Handle cancellations
+            print("Is cancelled")
+        }
+        else {
+            UdacityClient.sharedInstance().facebookAccessToken = result.token.tokenString
+            UdacityClient.sharedInstance().sessionWithFacebookAuthentication() { success, errorString in
+                if success {
+                    let rootNavVC = self.storyboard!.instantiateViewControllerWithIdentifier("rootNavVC") as! UINavigationController
+                    self.presentViewController(rootNavVC, animated: true, completion: nil)
+                }
             }
         }
     }
