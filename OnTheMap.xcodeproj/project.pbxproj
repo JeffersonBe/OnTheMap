@@ -78,11 +78,9 @@
 		B4AA859C1C3EF37D00807D01 /* OnTheMap */ = {
 			isa = PBXGroup;
 			children = (
+				B4AA85A11C3EF37D00807D01 /* Main.storyboard */,
 				B4AA859D1C3EF37D00807D01 /* AppDelegate.swift */,
 				B4AA859F1C3EF37D00807D01 /* LoginViewController.swift */,
-				B4AA85A11C3EF37D00807D01 /* Main.storyboard */,
-				B4AA85A41C3EF37D00807D01 /* Assets.xcassets */,
-				B4AA85A61C3EF37D00807D01 /* LaunchScreen.storyboard */,
 				B4AA85A91C3EF37D00807D01 /* Info.plist */,
 				B4A0A9EB1C427C8B002F0356 /* UdacityClient.swift */,
 				B48B50E31C42EFFA001ED7E1 /* ParseClient.swift */,
@@ -93,6 +91,8 @@
 				B4B4AD691C4504AD00811E3F /* InformationPostingViewController.swift */,
 				B4B4AD6B1C45667600811E3F /* TabBarViewController.swift */,
 				B4BEE4E41C4B00E400C774ED /* Bridging-Header.h */,
+				B4AA85A61C3EF37D00807D01 /* LaunchScreen.storyboard */,
+				B4AA85A41C3EF37D00807D01 /* Assets.xcassets */,
 			);
 			path = OnTheMap;
 			sourceTree = "<group>";

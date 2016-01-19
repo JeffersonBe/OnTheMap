@@ -25,29 +25,29 @@ class TabBarViewController: UITabBarController {
 
     func logout(){
         if UdacityClient.sharedInstance().facebookAccessToken == "" {
-        UdacityClient.sharedInstance().logoutAndDeleteSession { success, error in
-            if success {
-                dispatch_async(dispatch_get_main_queue()) {
-                    let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
-                    self.presentViewController(controller, animated: true, completion: nil)
+            UdacityClient.sharedInstance().logoutAndDeleteSession { success, error in
+                if success {
+                    dispatch_async(dispatch_get_main_queue()) {
+                        let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+                        self.presentViewController(controller, animated: true, completion: nil)
+                    }
                 }
             }
-        }
         } else {
             UdacityClient.sharedInstance().facebookAccessToken = ""
             let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
             fbLoginManager.logOut()
-            let loginViewController = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
-            self.presentViewController(loginViewController, animated: true, completion: nil)
+            let loginViewController = storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
+            presentViewController(loginViewController, animated: true, completion: nil)
         }
 
     }
 
     func handleRefresh() {
-        if self.selectedIndex == 0 {
+        if selectedIndex == 0 {
             let mapVC = viewControllers![0] as! MapViewController
             mapVC.refreshLocation()
-        } else if self.selectedIndex == 1 {
+        } else if selectedIndex == 1 {
             let tableVC = viewControllers![1] as! LocationTableViewController
             tableVC.refreshLocation()
         }
