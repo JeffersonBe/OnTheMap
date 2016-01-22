@@ -120,7 +120,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         activityIndicator.startAnimating()
 
         if MethodType == "POST" {
-            ParseClient.sharedInstance().postLocations(mapString, mediaURL: linkShareTextField.text!, latitude: latitude, longitude: longitude) { success, errorString in
+            OTMClient.sharedInstance().postLocations(mapString, mediaURL: linkShareTextField.text!, latitude: latitude, longitude: longitude) { success, errorString in
                 if success {
                     dispatch_async(dispatch_get_main_queue()) {
                         self.dismissViewControllerAnimated(true, completion: nil)
@@ -135,7 +135,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             }
 
         } else {
-            ParseClient.sharedInstance().updateLocations(mapString, mediaURL: linkShareTextField.text!, latitude: latitude, longitude: longitude) { success, errorString in
+            OTMClient.sharedInstance().updateLocations(mapString, mediaURL: linkShareTextField.text!, latitude: latitude, longitude: longitude) { success, errorString in
                 if success {
                     dispatch_async(dispatch_get_main_queue()) {
                         self.dismissViewControllerAnimated(true, completion: nil)

@@ -8,24 +8,8 @@
 
 import Foundation
 
-class UdacityClient: NSObject {
-
-    // MARK: - Variables
-
-    var username = ""
-    var password = ""
-    var uniqueKey = ""
-    var userFirstName = ""
-    var userLastName = ""
-    var session: NSURLSession
-    var facebookAccessToken = ""
-
-    override init() {
-        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-        session = NSURLSession(configuration: config)
-        super.init()
-    }
-
+extension OTMClient {
+    
     // MARK: - API Functions
 
     // Login to Udacity with user-supplied credentials
@@ -69,12 +53,15 @@ class UdacityClient: NSObject {
         request.HTTPMethod = "DELETE"
         var xsrfCookie: NSHTTPCookie? = nil
         let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+
         for cookie in sharedCookieStorage.cookies! {
             if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
         }
+
         if let xsrfCookie = xsrfCookie {
             request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
         }
+
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil {
                 completionHandler(success: false, errorString: "The internet connection appears to be offline")
@@ -160,17 +147,4 @@ class UdacityClient: NSObject {
         }
         task.resume()
     }
-
-    // MARK: - Shared Instance
-
-    // make this class a singleton to share across classes
-    class func sharedInstance() -> UdacityClient {
-
-        struct Singleton {
-            static var sharedInstance = UdacityClient()
-        }
-
-        return Singleton.sharedInstance
-    }
-
 }

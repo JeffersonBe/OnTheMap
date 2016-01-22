@@ -57,7 +57,7 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
     func refresh(sender:AnyObject) {
         activityIndicator.hidden = false
         activityIndicator.startAnimating()
-        ParseClient.sharedInstance().getLocations { success, locations, error in
+        OTMClient.sharedInstance().getLocations { success, locations, error in
             if let location = locations {
                 self.locations = location
                 dispatch_async(dispatch_get_main_queue()) {

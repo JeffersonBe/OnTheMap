@@ -7,6 +7,7 @@
 	objects = {
 
 /* Begin PBXBuildFile section */
+		B4273D471C52516100E2AB8D /* OTMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4273D461C52516100E2AB8D /* OTMClient.swift */; };
 		B48B50DE1C42B651001ED7E1 /* OTMConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48B50DD1C42B651001ED7E1 /* OTMConstants.swift */; };
 		B48B50E01C42D511001ED7E1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48B50DF1C42D511001ED7E1 /* MapViewController.swift */; };
 		B48B50E21C42DC2C001ED7E1 /* OTMLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48B50E11C42DC2C001ED7E1 /* OTMLocation.swift */; };
@@ -25,6 +26,7 @@
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
+		B4273D461C52516100E2AB8D /* OTMClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMClient.swift; sourceTree = "<group>"; };
 		B48B50DD1C42B651001ED7E1 /* OTMConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConstants.swift; sourceTree = "<group>"; };
 		B48B50DF1C42D511001ED7E1 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B48B50E11C42DC2C001ED7E1 /* OTMLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMLocation.swift; sourceTree = "<group>"; };
@@ -81,6 +83,7 @@
 		B4273D451C52392F00E2AB8D /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				B4273D461C52516100E2AB8D /* OTMClient.swift */,
 				B4A0A9EB1C427C8B002F0356 /* UdacityClient.swift */,
 				B48B50E31C42EFFA001ED7E1 /* ParseClient.swift */,
 				B48B50DD1C42B651001ED7E1 /* OTMConstants.swift */,
@@ -207,6 +210,7 @@
 				B48B50E21C42DC2C001ED7E1 /* OTMLocation.swift in Sources */,
 				B48B50E41C42EFFA001ED7E1 /* ParseClient.swift in Sources */,
 				B48B50E61C431429001ED7E1 /* LocationTableViewController.swift in Sources */,
+				B4273D471C52516100E2AB8D /* OTMClient.swift in Sources */,
 				B4AA859E1C3EF37D00807D01 /* AppDelegate.swift in Sources */,
 				B48B50DE1C42B651001ED7E1 /* OTMConstants.swift in Sources */,
 				B4B4AD6A1C4504AD00811E3F /* InformationPostingViewController.swift in Sources */,

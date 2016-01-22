@@ -8,18 +8,7 @@
 
 import Foundation
 
-class ParseClient: NSObject {
-
-    var locations: [OTMLocation] = [OTMLocation]()
-    var objectId: String = ""
-    var session: NSURLSession
-    var completionHandler : ((success: Bool, errorString: String?) -> Void)? = nil
-
-    override init() {
-        let config = NSURLSessionConfiguration.defaultSessionConfiguration()
-        session = NSURLSession(configuration: config)
-        super.init()
-    }
+extension OTMClient {
 
     func getLocations(completionHandler: (success: Bool, locations: [OTMLocation]?, errorString: String?) -> Void) {
         let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100&order=-updatedAt")!)
@@ -49,8 +38,6 @@ class ParseClient: NSObject {
                     return
                 }
 
-                print(results)
-
                 self.locations = OTMLocation.locationsFromResults(results)
                 completionHandler(success: true, locations: self.locations, errorString: nil)
             }
@@ -60,14 +47,14 @@ class ParseClient: NSObject {
 
     func postLocations(mapString: String, mediaURL: String, latitude: Double, longitude: Double, completionHandler: (success: Bool, errorString: String?) -> Void) {
         // let request = NSMutableURLRequest(URL: NSURL(string: OTMConstants.Constants.BaseUrl)!)
-        let urlString = "https://api.parse.com/1/classes/StudentLocation/\(UdacityClient.sharedInstance().uniqueKey)"
+        let urlString = "https://api.parse.com/1/classes/StudentLocation/\(uniqueKey)"
         let url = NSURL(string: urlString)
         let request = NSMutableURLRequest(URL: url!)
         request.HTTPMethod = "POST"
         request.addValue(OTMConstants.Constants.ParseApiKey, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(OTMConstants.Constants.RestApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"uniqueKey\": \"\(UdacityClient.sharedInstance().uniqueKey)\", \"firstName\": \"\(UdacityClient.sharedInstance().userFirstName)\", \"lastName\": \"\(UdacityClient.sharedInstance().userLastName)\",\"mapString\": \"\(mapString)\", \"mediaURL\": \"\(mediaURL)\", \"latitude\": \(latitude), \"longitude\": \(longitude)}".dataUsingEncoding(NSUTF8StringEncoding)
+        request.HTTPBody = "{\"uniqueKey\": \"\(uniqueKey)\", \"firstName\": \"\(userFirstName)\", \"lastName\": \"\(userLastName)\",\"mapString\": \"\(mapString)\", \"mediaURL\": \"\(mediaURL)\", \"latitude\": \(latitude), \"longitude\": \(longitude)}".dataUsingEncoding(NSUTF8StringEncoding)
 
         let task = session.dataTaskWithRequest(request) { data, response, error in
             if error != nil {
@@ -106,7 +93,7 @@ class ParseClient: NSObject {
         request.addValue(OTMConstants.Constants.RestApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         request.addValue("application/json", forHTTPHeaderField: "Content-Type")
         request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.HTTPBody = "{\"uniqueKey\": \"\(UdacityClient.sharedInstance().uniqueKey)\", \"firstName\": \"\(UdacityClient.sharedInstance().userFirstName)\", \"lastName\": \"\(UdacityClient.sharedInstance().userLastName)\",\"mapString\": \"\(mapString)\", \"mediaURL\": \"\(mediaURL)\",\"latitude\": \(Float(latitude)), \"longitude\": \(Float(longitude))}".dataUsingEncoding(NSUTF8StringEncoding)
+        request.HTTPBody = "{\"uniqueKey\": \"\(uniqueKey)\", \"firstName\": \"\(userFirstName)\", \"lastName\": \"\(userLastName)\",\"mapString\": \"\(mapString)\", \"mediaURL\": \"\(mediaURL)\",\"latitude\": \(Float(latitude)), \"longitude\": \(Float(longitude))}".dataUsingEncoding(NSUTF8StringEncoding)
         // request.HTTPBody = "{\"uniqueKey\": \"\(UdacityClient.sharedInstance().uniqueKey)\", \"firstName\": \"\(UdacityClient.sharedInstance().userFirstName)\", \"lastName\": \"\(UdacityClient.sharedInstance().userLastName)\",\"mapString\": \"Cupertino, CA\", \"mediaURL\": \"https://udacity.com\",\"latitude\": 37.322998, \"longitude\": -122.032182}".dataUsingEncoding(NSUTF8StringEncoding)
 
         let task = session.dataTaskWithRequest(request) { data, response, error in
@@ -139,7 +126,7 @@ class ParseClient: NSObject {
     }
 
     func queryLocations(completionHandler: (success: Bool, errorString: String?) -> Void) {
-        let urlString = "https://api.parse.com/1/classes/StudentLocation?where=%7B%22uniqueKey%22%3A%22\(UdacityClient.sharedInstance().uniqueKey)%22%7D"
+        let urlString = "https://api.parse.com/1/classes/StudentLocation?where=%7B%22uniqueKey%22%3A%22\(uniqueKey)%22%7D"
         let url = NSURL(string: urlString)
         let request = NSMutableURLRequest(URL: url!)
         request.addValue(OTMConstants.Constants.ParseApiKey, forHTTPHeaderField: "X-Parse-Application-Id")
@@ -182,14 +169,5 @@ class ParseClient: NSObject {
             }
         }
         task.resume()
-    }
-
-    class func sharedInstance() -> ParseClient {
-
-        struct Singleton {
-            static var sharedInstance = ParseClient()
-        }
-
-        return Singleton.sharedInstance
     }
 }

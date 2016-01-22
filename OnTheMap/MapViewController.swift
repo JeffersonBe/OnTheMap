@@ -23,7 +23,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
         mapView.delegate = self
 
-        ParseClient.sharedInstance().getLocations { success, locations, error in
+        OTMClient.sharedInstance().getLocations { success, locations, error in
             if let location = locations {
                 self.locations = location
                 dispatch_async(dispatch_get_main_queue()) {
@@ -99,7 +99,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func refreshLocation() {
         activityIndicator.hidden = false
         activityIndicator.startAnimating()
-        ParseClient.sharedInstance().getLocations { success, locations, error in
+        OTMClient.sharedInstance().getLocations { success, locations, error in
             if let location = locations {
                 self.locations = location
                 dispatch_async(dispatch_get_main_queue()) {
@@ -123,7 +123,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     func logout(){
         activityIndicator.hidden = false
         activityIndicator.startAnimating()
-        UdacityClient.sharedInstance().logoutAndDeleteSession { success, error in
+        OTMClient.sharedInstance().logoutAndDeleteSession { success, error in
             if success {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.activityIndicator.hidden = true

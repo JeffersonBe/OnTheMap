@@ -73,13 +73,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
             return
         }
 
-        UdacityClient.sharedInstance().username = emailTextField.text!
-        UdacityClient.sharedInstance().password = passwordTextField.text!
-
+        OTMClient.sharedInstance().username = emailTextField.text!
+        OTMClient.sharedInstance().password = passwordTextField.text!
 
         activityIndicator.startAnimating()
         activityIndicator.hidden = false
-        UdacityClient.sharedInstance().loginAndCreateSession() { (success, errorString) in
+        OTMClient.sharedInstance().loginAndCreateSession() { (success, errorString) in
             if success {
                 self.completeLogin()
             } else {
@@ -125,8 +124,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     func facebookLogin(tokenString: String) {
         activityIndicator.startAnimating()
         activityIndicator.hidden = false
-        UdacityClient.sharedInstance().facebookAccessToken = tokenString
-        UdacityClient.sharedInstance().sessionWithFacebookAuthentication() { success, errorString in
+        OTMClient.sharedInstance().facebookAccessToken = tokenString
+        OTMClient.sharedInstance().sessionWithFacebookAuthentication() { success, errorString in
             if success {
                 let rootNavVC = self.storyboard!.instantiateViewControllerWithIdentifier("rootNavVC") as! UINavigationController
                 self.presentViewController(rootNavVC, animated: true, completion: nil)

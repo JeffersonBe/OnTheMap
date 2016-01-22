@@ -24,8 +24,8 @@ class TabBarViewController: UITabBarController {
     }
 
     func logout(){
-        if UdacityClient.sharedInstance().facebookAccessToken == "" {
-            UdacityClient.sharedInstance().logoutAndDeleteSession { success, error in
+        if OTMClient.sharedInstance().facebookAccessToken == "" {
+            OTMClient.sharedInstance().logoutAndDeleteSession { success, error in
                 if success {
                     dispatch_async(dispatch_get_main_queue()) {
                         let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
@@ -34,7 +34,7 @@ class TabBarViewController: UITabBarController {
                 }
             }
         } else {
-            UdacityClient.sharedInstance().facebookAccessToken = ""
+            OTMClient.sharedInstance().facebookAccessToken = ""
             let fbLoginManager : FBSDKLoginManager = FBSDKLoginManager()
             fbLoginManager.logOut()
             let loginViewController = storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
@@ -54,7 +54,7 @@ class TabBarViewController: UITabBarController {
     }
 
     func checkIfAlreadyPostLocation() {
-        ParseClient.sharedInstance().queryLocations() { success, errorString in
+        OTMClient.sharedInstance().queryLocations() { success, errorString in
             if success {
                 dispatch_async(dispatch_get_main_queue()) {
                     let errorAlert = UIAlertController(title: "Add your location", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
