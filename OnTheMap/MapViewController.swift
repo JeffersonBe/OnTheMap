@@ -18,17 +18,28 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityIndicator.hidden = true
+        
+        activityIndicator.startAnimating()
+
         mapView.delegate = self
+
         ParseClient.sharedInstance().getLocations { success, locations, error in
             if let location = locations {
                 self.locations = location
                 dispatch_async(dispatch_get_main_queue()) {
                     self.mapView.reloadInputViews()
                     self.populateMap(self.locations)
+                    self.activityIndicator.hidden = true
+                    self.activityIndicator.stopAnimating()
                 }
             } else {
-                print(error)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.activityIndicator.hidden = true
+                    self.activityIndicator.stopAnimating()
+                    let errorAlert = UIAlertController(title: "Unable to load locations", message: error, preferredStyle: UIAlertControllerStyle.Alert)
+                    errorAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(errorAlert, animated: true, completion: nil)
+                }
             }
         }
     }
@@ -53,7 +64,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
             annotations.append(annotation)
         }
 
-        self.mapView.addAnnotations(annotations)
+        mapView.addAnnotations(annotations)
     }
 
     // MARK: - MKMapViewDelegate

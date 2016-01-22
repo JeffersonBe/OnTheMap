@@ -331,15 +331,16 @@
                         </connections>
                     </tableView>
                     <tabBarItem key="tabBarItem" title="List" image="ListIconOutline" id="NIb-yB-hJW"/>
+                    <refreshControl key="refreshControl" opaque="NO" multipleTouchEnabled="YES" contentMode="center" enabled="NO" contentHorizontalAlignment="center" contentVerticalAlignment="center" id="HCJ-Rv-v1A">
+                        <autoresizingMask key="autoresizingMask"/>
+                        <attributedString key="attributedTitle"/>
+                    </refreshControl>
                     <connections>
+                        <outlet property="refreshControl" destination="HCJ-Rv-v1A" id="v9x-iB-tUu"/>
                         <outlet property="table" destination="IbY-rh-6AG" id="C2Y-f6-Khi"/>
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FUk-kZ-AeC" userLabel="First Responder" sceneMemberID="firstResponder"/>
-                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="dQ6-Nl-nEM">
-                    <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
-                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
-                </activityIndicatorView>
             </objects>
             <point key="canvasLocation" x="1331" y="996"/>
         </scene>

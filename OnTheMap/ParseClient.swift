@@ -22,7 +22,7 @@ class ParseClient: NSObject {
     }
 
     func getLocations(completionHandler: (success: Bool, locations: [OTMLocation]?, errorString: String?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100")!)
+        let request = NSMutableURLRequest(URL: NSURL(string: "https://api.parse.com/1/classes/StudentLocation?limit=100&order=-updatedAt")!)
         request.addValue(OTMConstants.Constants.ParseApiKey, forHTTPHeaderField: "X-Parse-Application-Id")
         request.addValue(OTMConstants.Constants.RestApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
 
@@ -48,6 +48,9 @@ class ParseClient: NSObject {
                     completionHandler(success: false, locations: nil, errorString: nil)
                     return
                 }
+
+                print(results)
+
                 self.locations = OTMLocation.locationsFromResults(results)
                 completionHandler(success: true, locations: self.locations, errorString: nil)
             }
@@ -124,7 +127,7 @@ class ParseClient: NSObject {
                     print("Could not parse the data as JSON: '\(data)'")
                     return
                 }
-                print(parsedResult)
+
                 guard parsedResult["updatedAt"] != nil else {
                     completionHandler(success: false, errorString: nil)
                     return

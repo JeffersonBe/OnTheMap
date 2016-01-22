@@ -12,6 +12,7 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
 
     @IBOutlet weak var table: UITableView!
     let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
+    @IBOutlet weak var refreshControl: UIRefreshControl!
 
     var locations: [OTMLocation] = [OTMLocation]()
 
@@ -25,11 +26,9 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
         table.delegate = self
         table.dataSource = self
 
-        refreshLocation()
+        refresh(true)
 
-        let refreshControl = UIRefreshControl()
-        refreshControl.addTarget(self, action: "refreshLocation", forControlEvents: UIControlEvents.ValueChanged)
-        table.addSubview(refreshControl)
+        refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
     }
     
     // MARK: UITableViewController
@@ -55,7 +54,7 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
         app.openURL(NSURL(string: location.mediaURL)!)
     }
 
-    func refreshLocation() {
+    func refresh(sender:AnyObject) {
         activityIndicator.hidden = false
         activityIndicator.startAnimating()
         ParseClient.sharedInstance().getLocations { success, locations, error in
@@ -63,6 +62,7 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
                 self.locations = location
                 dispatch_async(dispatch_get_main_queue()) {
                     self.table.reloadData()
+                    self.refreshControl?.endRefreshing()
                     self.activityIndicator.hidden = true
                     self.activityIndicator.stopAnimating()
                 }
@@ -70,6 +70,7 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
                 dispatch_async(dispatch_get_main_queue()) {
                     self.activityIndicator.hidden = true
                     self.activityIndicator.stopAnimating()
+                    self.refreshControl?.endRefreshing()
                     let errorAlert = UIAlertController(title: "Unable to load locations", message: error, preferredStyle: UIAlertControllerStyle.Alert)
                     errorAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(errorAlert, animated: true, completion: nil)

@@ -49,7 +49,7 @@ class TabBarViewController: UITabBarController {
             mapVC.refreshLocation()
         } else if selectedIndex == 1 {
             let tableVC = viewControllers![1] as! LocationTableViewController
-            tableVC.refreshLocation()
+            tableVC.refresh(true)
         }
     }
 
