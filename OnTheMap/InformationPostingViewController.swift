@@ -16,6 +16,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
     @IBOutlet weak var linkShareTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     var MethodType: String = ""
     var mapString: String = ""
@@ -32,6 +33,8 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.hidden = true
+
         locationTextField.delegate = self
         linkShareTextField.delegate = self
 
@@ -69,10 +72,15 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         request.region = mapView.region
         let search = MKLocalSearch(request: request)
 
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
+
         search.startWithCompletionHandler { response, error in
             guard let response = response else {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.throwFail("We're not able to found your location, please check it")
+                    self.activityIndicator.hidden = true
+                    self.activityIndicator.stopAnimating()
                     print("There was an error searching for: \(request.naturalLanguageQuery) error: \(error)")
                 }
                 return
@@ -97,6 +105,8 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                 self.mapView.addAnnotations(annotations)
                 self.mapView.reloadInputViews()
                 self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+                self.activityIndicator.hidden = true
+                self.activityIndicator.stopAnimating()
             }
         }
     }
@@ -106,6 +116,9 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             return
         }
 
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
+
         if MethodType == "POST" {
             ParseClient.sharedInstance().postLocations(mapString, mediaURL: linkShareTextField.text!, latitude: latitude, longitude: longitude) { success, errorString in
                 if success {
@@ -113,7 +126,11 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }
                 } else {
-                    print(errorString)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.activityIndicator.hidden = true
+                        self.activityIndicator.stopAnimating()
+                        self.throwFail(errorString!)
+                    }
                 }
             }
 
@@ -124,7 +141,11 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                         self.dismissViewControllerAnimated(true, completion: nil)
                     }
                 } else {
-                    print(errorString)
+                    dispatch_async(dispatch_get_main_queue()) {
+                        self.activityIndicator.hidden = true
+                        self.activityIndicator.stopAnimating()
+                        self.throwFail(errorString!)
+                    }
                 }
             }
         }

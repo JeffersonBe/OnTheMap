@@ -1,5 +1,5 @@
 <?xml version="1.0" encoding="UTF-8" standalone="no"?>
-<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15C50" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
+<document type="com.apple.InterfaceBuilder3.CocoaTouch.Storyboard.XIB" version="3.0" toolsVersion="9531" systemVersion="15D21" targetRuntime="iOS.CocoaTouch" propertyAccessControl="none" useAutolayout="YES" useTraitCollections="YES" initialViewController="BYZ-38-t0r">
     <dependencies>
         <deployment identifier="iOS"/>
         <plugIn identifier="com.apple.InterfaceBuilder.IBCocoaTouchPlugin" version="9529"/>
@@ -52,6 +52,9 @@
                             <imageView userInteractionEnabled="NO" contentMode="scaleToFill" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="UdacityLogo" translatesAutoresizingMaskIntoConstraints="NO" id="ddb-M6-EyK">
                                 <rect key="frame" x="238" y="79" width="125" height="137"/>
                             </imageView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="white" translatesAutoresizingMaskIntoConstraints="NO" id="LLQ-Pp-u6p">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
                             <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="v5p-x7-bwy">
                                 <rect key="frame" x="67" y="377" width="466" height="45"/>
                                 <color key="backgroundColor" red="0.85490196078431369" green="0.36078431372549019" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
@@ -73,8 +76,10 @@
                             <constraint firstItem="KEx-3n-X0h" firstAttribute="leading" secondItem="8bC-Xf-vdC" secondAttribute="leadingMargin" constant="47" id="3jv-T9-F22"/>
                             <constraint firstItem="mML-sL-qdi" firstAttribute="top" secondItem="LuP-Xj-HF8" secondAttribute="bottom" constant="15" id="5PB-Ql-huA"/>
                             <constraint firstAttribute="trailingMargin" secondItem="YeY-f5-MW9" secondAttribute="trailing" constant="47" id="65G-Fe-hKr"/>
+                            <constraint firstItem="LLQ-Pp-u6p" firstAttribute="centerY" secondItem="8bC-Xf-vdC" secondAttribute="centerY" id="80A-wF-gHG"/>
                             <constraint firstItem="YeY-f5-MW9" firstAttribute="top" secondItem="v5p-x7-bwy" secondAttribute="bottom" constant="8" id="Aaf-0S-DfS"/>
                             <constraint firstItem="ddb-M6-EyK" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="Cw6-YP-Tql"/>
+                            <constraint firstItem="LLQ-Pp-u6p" firstAttribute="centerX" secondItem="8bC-Xf-vdC" secondAttribute="centerX" id="GfA-15-oWH"/>
                             <constraint firstItem="LuP-Xj-HF8" firstAttribute="top" secondItem="ddb-M6-EyK" secondAttribute="bottom" constant="33" id="Ith-gR-eFA"/>
                             <constraint firstItem="v5p-x7-bwy" firstAttribute="top" secondItem="AlV-l8-idg" secondAttribute="bottom" constant="18" id="K1e-ce-hZ7"/>
                             <constraint firstAttribute="trailingMargin" secondItem="v5p-x7-bwy" secondAttribute="trailing" constant="47" id="Llz-5Q-FF7"/>
@@ -91,6 +96,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="LLQ-Pp-u6p" id="UzG-B9-SXe"/>
                         <outlet property="emailTextField" destination="mML-sL-qdi" id="Her-VD-g2v"/>
                         <outlet property="facebookLoginButton" destination="KEx-3n-X0h" id="g6H-dm-WRu"/>
                         <outlet property="informationLabel" destination="LuP-Xj-HF8" id="slB-ld-snc"/>
@@ -182,6 +188,9 @@
                                 <fontDescription key="fontDescription" type="system" pointSize="14"/>
                                 <textInputTraits key="textInputTraits" autocorrectionType="no" spellCheckingType="no"/>
                             </textField>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="KzC-x5-8xt">
+                                <rect key="frame" x="290" y="290" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
@@ -196,7 +205,9 @@
                             <constraint firstItem="8FL-3x-3XO" firstAttribute="centerX" secondItem="9MX-CA-Sbt" secondAttribute="centerX" id="UAe-C0-5lS"/>
                             <constraint firstItem="JUy-dS-1WY" firstAttribute="top" secondItem="IHF-IV-noF" secondAttribute="bottom" constant="8" id="VbO-Z0-ftL"/>
                             <constraint firstItem="TjB-AU-GoN" firstAttribute="centerX" secondItem="TvN-1e-ldw" secondAttribute="centerX" id="VpA-c4-zQi"/>
+                            <constraint firstItem="KzC-x5-8xt" firstAttribute="centerY" secondItem="TvN-1e-ldw" secondAttribute="centerY" id="bSS-XB-mPo"/>
                             <constraint firstItem="IHF-IV-noF" firstAttribute="top" secondItem="9MX-CA-Sbt" secondAttribute="bottom" constant="12" id="ciK-CY-guA"/>
+                            <constraint firstItem="KzC-x5-8xt" firstAttribute="centerX" secondItem="TvN-1e-ldw" secondAttribute="centerX" id="fjE-XG-aNR"/>
                             <constraint firstItem="9MX-CA-Sbt" firstAttribute="centerY" secondItem="TvN-1e-ldw" secondAttribute="centerY" id="gAL-EW-Sen"/>
                             <constraint firstItem="9MX-CA-Sbt" firstAttribute="leading" secondItem="TvN-1e-ldw" secondAttribute="leadingMargin" constant="-20" id="jcA-BO-mkF"/>
                             <constraint firstItem="Dcs-Ch-ZvF" firstAttribute="centerX" secondItem="8FL-3x-3XO" secondAttribute="centerX" id="mvP-P8-jaC"/>
@@ -206,6 +217,7 @@
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="activityIndicator" destination="KzC-x5-8xt" id="xMI-J5-ojS"/>
                         <outlet property="linkShareTextField" destination="JUy-dS-1WY" id="wao-bu-KHg"/>
                         <outlet property="locationSearchButton" destination="8FL-3x-3XO" id="1aD-sF-RqU"/>
                         <outlet property="locationTextField" destination="Dcs-Ch-ZvF" id="viW-8U-L1d"/>
@@ -232,17 +244,23 @@
                             <mapView clipsSubviews="YES" multipleTouchEnabled="YES" contentMode="scaleToFill" mapType="standard" translatesAutoresizingMaskIntoConstraints="NO" id="k10-mK-UIe">
                                 <rect key="frame" x="0.0" y="64" width="600" height="487"/>
                             </mapView>
+                            <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" translatesAutoresizingMaskIntoConstraints="NO" id="dRf-R9-XWh">
+                                <rect key="frame" x="290" y="298" width="20" height="20"/>
+                            </activityIndicatorView>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
                             <constraint firstItem="k10-mK-UIe" firstAttribute="leading" secondItem="eiF-J6-gLg" secondAttribute="leadingMargin" constant="-20" id="Bj1-wG-i93"/>
                             <constraint firstAttribute="trailingMargin" secondItem="k10-mK-UIe" secondAttribute="trailing" constant="-20" id="EyU-aq-fVK"/>
+                            <constraint firstItem="dRf-R9-XWh" firstAttribute="centerY" secondItem="k10-mK-UIe" secondAttribute="centerY" id="Gun-7F-8fN"/>
                             <constraint firstItem="PuQ-hj-t1S" firstAttribute="top" secondItem="k10-mK-UIe" secondAttribute="bottom" id="mI2-Zy-hb4"/>
                             <constraint firstItem="k10-mK-UIe" firstAttribute="top" secondItem="XG7-de-85e" secondAttribute="bottom" id="pNJ-h8-bcX"/>
+                            <constraint firstItem="dRf-R9-XWh" firstAttribute="centerX" secondItem="k10-mK-UIe" secondAttribute="centerX" id="qFO-oB-E2u"/>
                         </constraints>
                     </view>
                     <tabBarItem key="tabBarItem" title="Map" image="MapsIcon" id="Q6m-xr-hOV"/>
                     <connections>
+                        <outlet property="activityIndicator" destination="dRf-R9-XWh" id="c0F-Ca-jC3"/>
                         <outlet property="mapView" destination="k10-mK-UIe" id="1xM-Mw-7qE"/>
                     </connections>
                 </viewController>
@@ -318,6 +336,10 @@
                     </connections>
                 </tableViewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="FUk-kZ-AeC" userLabel="First Responder" sceneMemberID="firstResponder"/>
+                <activityIndicatorView opaque="NO" contentMode="scaleToFill" horizontalHuggingPriority="750" verticalHuggingPriority="750" style="gray" id="dQ6-Nl-nEM">
+                    <rect key="frame" x="0.0" y="0.0" width="20" height="20"/>
+                    <autoresizingMask key="autoresizingMask" flexibleMaxX="YES" flexibleMaxY="YES"/>
+                </activityIndicatorView>
             </objects>
             <point key="canvasLocation" x="1331" y="996"/>
         </scene>

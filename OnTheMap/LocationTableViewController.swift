@@ -11,11 +11,17 @@ import UIKit
 class LocationTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var table: UITableView!
+    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
 
     var locations: [OTMLocation] = [OTMLocation]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.hidden = true
+        activityIndicator.center = view.center
+        view.addSubview(activityIndicator)
+        activityIndicator.bringSubviewToFront(view)
+
         table.delegate = self
         table.dataSource = self
 
@@ -50,14 +56,24 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func refreshLocation() {
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
         ParseClient.sharedInstance().getLocations { success, locations, error in
             if let location = locations {
                 self.locations = location
                 dispatch_async(dispatch_get_main_queue()) {
                     self.table.reloadData()
+                    self.activityIndicator.hidden = true
+                    self.activityIndicator.stopAnimating()
                 }
             } else {
-                print(error)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.activityIndicator.hidden = true
+                    self.activityIndicator.stopAnimating()
+                    let errorAlert = UIAlertController(title: "Unable to load locations", message: error, preferredStyle: UIAlertControllerStyle.Alert)
+                    errorAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(errorAlert, animated: true, completion: nil)
+                }
             }
         }
     }

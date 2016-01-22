@@ -12,10 +12,13 @@ import MapKit
 class MapViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
     var locations: [OTMLocation] = [OTMLocation]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        activityIndicator.hidden = true
         mapView.delegate = self
         ParseClient.sharedInstance().getLocations { success, locations, error in
             if let location = locations {
@@ -54,10 +57,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 
     // MARK: - MKMapViewDelegate
-
-    // Here we create a view with a "right callout accessory view". You might choose to look into other
-    // decoration alternatives. Notice the similarity between this method and the cellForRowAtIndexPath
-    // method in TableViewDataSource.
     func mapView(mapView: MKMapView, viewForAnnotation annotation: MKAnnotation) -> MKAnnotationView? {
 
         let reuseId = "pin"
@@ -76,9 +75,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         return pinView
     }
 
-
-    // This delegate method is implemented to respond to taps. It opens the system browser
-    // to the URL specified in the annotationViews subtitle property.
     func mapView(mapView: MKMapView, annotationView: MKAnnotationView, calloutAccessoryControlTapped control: UIControl) {
 
         if control == annotationView.rightCalloutAccessoryView {
@@ -90,23 +86,37 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 
     func refreshLocation() {
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
         ParseClient.sharedInstance().getLocations { success, locations, error in
             if let location = locations {
                 self.locations = location
                 dispatch_async(dispatch_get_main_queue()) {
+                    self.activityIndicator.hidden = true
+                    self.activityIndicator.stopAnimating()
                     self.mapView.reloadInputViews()
                     self.populateMap(self.locations)
                 }
             } else {
-                print(error)
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.activityIndicator.hidden = true
+                    self.activityIndicator.stopAnimating()
+                    let errorAlert = UIAlertController(title: "Unable to load locations", message: error, preferredStyle: UIAlertControllerStyle.Alert)
+                    errorAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+                    self.presentViewController(errorAlert, animated: true, completion: nil)
+                }
             }
         }
     }
 
     func logout(){
+        activityIndicator.hidden = false
+        activityIndicator.startAnimating()
         UdacityClient.sharedInstance().logoutAndDeleteSession { success, error in
             if success {
                 dispatch_async(dispatch_get_main_queue()) {
+                    self.activityIndicator.hidden = true
+                    self.activityIndicator.stopAnimating()
                     let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
                     self.presentViewController(controller, animated: true, completion: nil)
                 }
