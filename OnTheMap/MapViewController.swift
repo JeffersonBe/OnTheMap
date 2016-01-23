@@ -24,8 +24,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         mapView.delegate = self
 
         OTMClient.sharedInstance().getLocations { success, locations, error in
-            if let location = locations {
-                self.locations = location
+            if success {
+                self.locations = locations!
                 dispatch_async(dispatch_get_main_queue()) {
                     self.mapView.reloadInputViews()
                     self.populateMap(self.locations)
@@ -100,8 +100,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         activityIndicator.hidden = false
         activityIndicator.startAnimating()
         OTMClient.sharedInstance().getLocations { success, locations, error in
-            if let location = locations {
-                self.locations = location
+            if success {
+                self.locations = locations!
                 dispatch_async(dispatch_get_main_queue()) {
                     self.activityIndicator.hidden = true
                     self.activityIndicator.stopAnimating()
@@ -131,6 +131,12 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                     let controller = self.storyboard!.instantiateViewControllerWithIdentifier("LoginViewController") as! LoginViewController
                     self.presentViewController(controller, animated: true, completion: nil)
                 }
+            } else {
+                self.activityIndicator.hidden = true
+                self.activityIndicator.stopAnimating()
+                let errorAlert = UIAlertController(title: "Unable to logout", message: error, preferredStyle: UIAlertControllerStyle.Alert)
+                errorAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+                self.presentViewController(errorAlert, animated: true, completion: nil)
             }
         }
     }

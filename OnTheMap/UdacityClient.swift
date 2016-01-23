@@ -23,8 +23,13 @@ extension OTMClient {
             ]
         ]
 
-        /* 2. Make the request */
         taskForPOSTMethod("Udacity", HTTPMethod: "POST", urlString: urlString, parameters: ["":""], jsonBody: jsonBody) { results, error in
+
+            guard (error == nil) else {
+                completionHandler(success: false, errorString: error!.localizedDescription)
+                print("There was an error with your request: \(error)")
+                return
+            }
 
             guard let result = results["account"] as? NSDictionary else {
                 completionHandler(success: false, errorString: "Wrong email or password")
@@ -40,11 +45,15 @@ extension OTMClient {
     // logout and destroy session
     func logoutAndDeleteSession(completionHandler: (success: Bool, errorString: String?) -> Void) {
 
-        let urlString = "https://www.udacity.com/api/session"
-        // let urlString = OTMConstants.Constants.UdacityBaseUrl + OTMConstants.Methods.AuthenticationSessionNew
+        let urlString = OTMConstants.Constants.UdacityBaseUrl + OTMConstants.Methods.AuthenticationSessionNew
 
-        /* 2. Make the request */
         taskForPOSTMethod("Udacity", HTTPMethod: "DELETE", urlString: urlString, parameters: ["":""], jsonBody: ["":""]) { JSONResult, error in
+
+            guard (error == nil) else {
+                completionHandler(success: false, errorString: error!.localizedDescription)
+                print("There was an error with your request: \(error)")
+                return
+            }
 
             guard JSONResult["session"] != nil else {
                 completionHandler(success: false, errorString: "Could not logout")
@@ -63,6 +72,12 @@ extension OTMClient {
             + "/\(uniqueKey)"
 
         taskForGETMethod("Udacity", urlString: urlString, parameters: ["":""]) { result, error in
+
+            guard (error == nil) else {
+                print("There was an error with your request: \(error)")
+                return
+            }
+
             guard let user = result["user"] as? NSDictionary else {
                 print("Couldn't find the user")
                 return
@@ -83,6 +98,12 @@ extension OTMClient {
         ]
 
         taskForPOSTMethod("Udacity", HTTPMethod: "POST", urlString: urlString, parameters: ["":""], jsonBody: jsonBody) { results, error in
+
+            guard (error == nil) else {
+                completionHandler(success: false, errorString: error!.localizedDescription)
+                print("There was an error with your request: \(error)")
+                return
+            }
 
             guard let result = results["account"] as? NSDictionary else {
                 completionHandler(success: false, errorString: "Wrong email or password")

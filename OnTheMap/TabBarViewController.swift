@@ -58,10 +58,10 @@ class TabBarViewController: UITabBarController {
             if success {
                 dispatch_async(dispatch_get_main_queue()) {
                     let errorAlert = UIAlertController(title: "Add your location", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-                    errorAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
                     errorAlert.addAction(UIAlertAction(title: "Overwrite", style: UIAlertActionStyle.Default, handler: { action in
                         self.addLocation("PUT")
                     }))
+                    errorAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
                     self.presentViewController(errorAlert, animated: true, completion: nil)
                 }
             } else {

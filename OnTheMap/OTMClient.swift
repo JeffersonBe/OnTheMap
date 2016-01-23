@@ -45,7 +45,6 @@ class OTMClient: NSObject {
         if parameters.keys.first != "" {
             urlComposed = urlString + OTMClient.escapedParameters(parameters)
         }
-        print(urlComposed)
 
         let request = NSMutableURLRequest(URL: NSURL(string: urlComposed)!)
 
@@ -54,34 +53,23 @@ class OTMClient: NSObject {
             request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
         }
 
-        /* 4. Make the request */
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
 
             /* GUARD: Was there an error? */
             guard (error == nil) else {
+                completionHandler(result: nil, error: error)
                 print("There was an error with your request: \(error)")
-                return
-            }
-
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                if let response = response as? NSHTTPURLResponse {
-                    print("Your request returned an invalid response! Status code: \(response.statusCode)!")
-                } else if let response = response {
-                    print("Your request returned an invalid response! Response: \(response)!")
-                } else {
-                    print("Your request returned an invalid response!")
-                }
                 return
             }
 
             /* GUARD: Was there any data returned? */
             guard let data = data else {
+                completionHandler(result: nil, error: error)
                 print("No data was returned by the request!")
                 return
             }
 
-            /* 5/6. Parse the data and use the data (happens in completion handler) */
+            /* Parse the data and use the data (happens in completion handler) */
             OTMClient.parseJSONWithCompletionHandler(Api, data: data, completionHandler: completionHandler)
         }
 
@@ -140,33 +128,22 @@ class OTMClient: NSObject {
 
             /* GUARD: Was there an error? */
             guard (error == nil) else {
+                completionHandler(result: nil, error: error)
                 print("There was an error with your request: \(error)")
-                return
-            }
-
-            /* GUARD: Did we get a successful 2XX response? */
-            guard let statusCode = (response as? NSHTTPURLResponse)?.statusCode where statusCode >= 200 && statusCode <= 299 else {
-                if let response = response as? NSHTTPURLResponse {
-                    print("Your request returned an invalid response! Status code: \(response.statusCode)!")
-                } else if let response = response {
-                    print("Your request returned an invalid response! Response: \(response)!")
-                } else {
-                    print("Your request returned an invalid response!")
-                }
                 return
             }
 
             /* GUARD: Was there any data returned? */
             guard let data = data else {
+                completionHandler(result: nil, error: error)
                 print("No data was returned by the request!")
                 return
             }
 
-            /* 5/6. Parse the data and use the data (happens in completion handler) */
+            /* Parse the data and use the data (happens in completion handler) */
             OTMClient.parseJSONWithCompletionHandler(Api, data: data, completionHandler: completionHandler)
         }
 
-        /* 7. Start the request */
         task.resume()
         return task
     }

@@ -58,8 +58,8 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
         activityIndicator.hidden = false
         activityIndicator.startAnimating()
         OTMClient.sharedInstance().getLocations { success, locations, error in
-            if let location = locations {
-                self.locations = location
+            if success {
+                self.locations = locations!
                 dispatch_async(dispatch_get_main_queue()) {
                     self.table.reloadData()
                     self.refreshControl?.endRefreshing()

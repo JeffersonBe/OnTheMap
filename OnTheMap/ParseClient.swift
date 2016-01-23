@@ -18,6 +18,12 @@ extension OTMClient {
         /* 2. Make the request */
         taskForGETMethod("Parse", urlString: urlString, parameters: parameters) { results, error in
 
+            guard (error == nil) else {
+                completionHandler(success: false, locations: nil, errorString: error!.localizedDescription)
+                print("There was an error with your request: \(error)")
+                return
+            }
+
                 guard let results = results["results"] as? [[String:AnyObject]] else {
                     completionHandler(success: false, locations: nil, errorString: nil)
                     return
@@ -44,6 +50,12 @@ extension OTMClient {
 
         taskForPOSTMethod("Parse", HTTPMethod: "POST", urlString: urlString, parameters: ["":""], jsonBody: jsonBody) { results, error in
 
+            guard (error == nil) else {
+                completionHandler(success: false, errorString: error!.localizedDescription)
+                print("There was an error with your request: \(error)")
+                return
+            }
+
             guard results["createdAt"] != nil else {
                 completionHandler(success: false, errorString: nil)
                 return
@@ -69,6 +81,12 @@ extension OTMClient {
 
         taskForPOSTMethod("Parse", HTTPMethod: "PUT", urlString: urlString, parameters: ["":""], jsonBody: jsonBody) { results, error in
 
+            guard (error == nil) else {
+                completionHandler(success: false, errorString: error!.localizedDescription)
+                print("There was an error with your request: \(error)")
+                return
+            }
+
             guard results["updatedAt"] != nil else {
                 completionHandler(success: false, errorString: nil)
                 return
@@ -82,10 +100,17 @@ extension OTMClient {
 
         let urlString = "https://api.parse.com/1/classes/StudentLocation?where=%7B%22uniqueKey%22%3A%22\(uniqueKey)%22%7D"
 
+        // Mark: TO-DO
         // let parameters = ["where": ["uniqueKey":uniqueKey]]
 
         /* 2. Make the request */
         taskForGETMethod("Parse", urlString: urlString, parameters: ["":""]) { results, error in
+
+            guard (error == nil) else {
+                completionHandler(success: false, errorString: error!.localizedDescription)
+                print("There was an error with your request: \(error)")
+                return
+            }
 
             guard let results = results["results"] as? [[String:AnyObject]] else {
                 completionHandler(success: false, errorString: nil)
