@@ -45,8 +45,14 @@ class OTMClient: NSObject {
         if parameters.keys.first != "" {
             urlComposed = urlString + OTMClient.escapedParameters(parameters)
         }
+        print(urlComposed)
 
         let request = NSMutableURLRequest(URL: NSURL(string: urlComposed)!)
+
+        if Api == "Parse" {
+            request.addValue("QrX47CA9cyuGewLdsL7o5Eb8iug6Em8ye0dnAbIr", forHTTPHeaderField: "X-Parse-Application-Id")
+            request.addValue("QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY", forHTTPHeaderField: "X-Parse-REST-API-Key")
+        }
 
         /* 4. Make the request */
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
@@ -113,9 +119,14 @@ class OTMClient: NSObject {
 
         }
 
-        if HTTPMethod != "DELETE" {
+        if HTTPMethod != "DELETE" && Api == "Udacity" {
             request.addValue("application/json", forHTTPHeaderField: "Accept")
             request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        }
+
+        if HTTPMethod != "DELETE" && Api == "Parse" {
+            request.addValue(OTMConstants.Constants.ParseApiKey, forHTTPHeaderField: "X-Parse-Application-Id")
+            request.addValue(OTMConstants.Constants.RestApiKey, forHTTPHeaderField: "X-Parse-REST-API-Key")
         }
 
         if jsonBody.keys.first != "" {

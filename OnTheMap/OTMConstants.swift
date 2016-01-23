@@ -53,8 +53,15 @@ class OTMConstants: NSObject {
         static let Udacity = "udacity"
         static let Username = "username"
         static let Password = "password"
+        static let firstName = "firstName"
+        static let lastName = "lastName"
         static let facebookMobile = "facebook_mobile"
         static let accessToken = "access_token"
+        static let uniqueKey = "uniqueKey"
+        static let mapString = "mapString"
+        static let mediaURL = "mediaURL"
+        static let latitude = "latitude"
+        static let longitude = "longitude"
     }
 
     // MARK: JSON Response Keys
