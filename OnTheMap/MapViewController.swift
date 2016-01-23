@@ -18,30 +18,14 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        
-        activityIndicator.startAnimating()
-
         mapView.delegate = self
+        activityIndicator.startAnimating()
+        refreshLocation()
+    }
 
-        OTMClient.sharedInstance().getLocations { success, locations, error in
-            if success {
-                self.locations = locations!
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.mapView.reloadInputViews()
-                    self.populateMap(self.locations)
-                    self.activityIndicator.hidden = true
-                    self.activityIndicator.stopAnimating()
-                }
-            } else {
-                dispatch_async(dispatch_get_main_queue()) {
-                    self.activityIndicator.hidden = true
-                    self.activityIndicator.stopAnimating()
-                    let errorAlert = UIAlertController(title: "Unable to load locations", message: error, preferredStyle: UIAlertControllerStyle.Alert)
-                    errorAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
-                    self.presentViewController(errorAlert, animated: true, completion: nil)
-                }
-            }
-        }
+    override func viewWillAppear(animated: Bool) {
+        super.viewWillAppear(animated)
+        refreshLocation()
     }
 
     func populateMap(locations: [OTMLocation]) {
@@ -97,14 +81,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 
     func refreshLocation() {
-        activityIndicator.hidden = false
-        activityIndicator.startAnimating()
         OTMClient.sharedInstance().getLocations { success, locations, error in
             if success {
                 self.locations = locations!
                 dispatch_async(dispatch_get_main_queue()) {
                     self.activityIndicator.hidden = true
                     self.activityIndicator.stopAnimating()
+                    self.mapView.removeAnnotations(self.mapView.annotations)
                     self.mapView.reloadInputViews()
                     self.populateMap(self.locations)
                 }
