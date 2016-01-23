@@ -36,19 +36,17 @@ class OTMClient: NSObject {
         super.init()
     }
 
-
     // MARK: GET
 
-    func taskForGETMethod(method: String, parameters: [String : AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForGETMethod(Api: String, urlString: String, parameters: [String : AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
 
-        /* 1. Set the parameters */
-        var mutableParameters = parameters
-        mutableParameters[OTMConstants.Constants.ParseApiKey] = OTMConstants.Constants.ParseApiKey
+        var urlComposed = urlString
 
-        /* 2/3. Build the URL and configure the request */
-        let urlString = OTMConstants.Constants.BaseUrl + method + OTMClient.escapedParameters(mutableParameters)
-        let url = NSURL(string: urlString)!
-        let request = NSURLRequest(URL: url)
+        if parameters.keys.first != "" {
+            urlComposed = urlString + OTMClient.escapedParameters(parameters)
+        }
+
+        let request = NSMutableURLRequest(URL: NSURL(string: urlComposed)!)
 
         /* 4. Make the request */
         let task = session.dataTaskWithRequest(request) { (data, response, error) in
@@ -78,7 +76,7 @@ class OTMClient: NSObject {
             }
 
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            OTMClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
+            OTMClient.parseJSONWithCompletionHandler(Api, data: data, completionHandler: completionHandler)
         }
 
         /* 7. Start the request */
@@ -89,21 +87,41 @@ class OTMClient: NSObject {
 
     // MARK: POST
 
-    func taskForPOSTMethod(method: String, parameters: [String : AnyObject], jsonBody: [String:AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
+    func taskForPOSTMethod(Api: String, HTTPMethod: String, urlString: String, parameters: [String : AnyObject], jsonBody: [String:AnyObject], completionHandler: (result: AnyObject!, error: NSError?) -> Void) -> NSURLSessionDataTask {
 
-        /* 1. Set the parameters */
-        var mutableParameters = parameters
-        mutableParameters[OTMConstants.Constants.ParseApiKey] =  OTMConstants.Constants.ParseApiKey
+        var urlComposed = urlString
 
-        /* 2/3. Build the URL and configure the request */
-        let urlString = OTMConstants.Constants.BaseUrl + method + OTMClient.escapedParameters(mutableParameters)
-        let url = NSURL(string: urlString)!
-        let request = NSMutableURLRequest(URL: url)
-        request.HTTPMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        do {
-            request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(jsonBody, options: .PrettyPrinted)
+        if parameters.keys.first != "" {
+            urlComposed = urlString + OTMClient.escapedParameters(parameters)
+        }
+
+        let request = NSMutableURLRequest(URL: NSURL(string: urlComposed)!)
+
+        if HTTPMethod != "" {
+            request.HTTPMethod = HTTPMethod
+        }
+
+        if HTTPMethod == "DELETE" {
+            var xsrfCookie: NSHTTPCookie? = nil
+            let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
+            for cookie in sharedCookieStorage.cookies! {
+                if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
+            }
+            if let xsrfCookie = xsrfCookie {
+                request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
+            }
+
+        }
+
+        if HTTPMethod != "DELETE" {
+            request.addValue("application/json", forHTTPHeaderField: "Accept")
+            request.addValue("application/json", forHTTPHeaderField: "Content-Type")
+        }
+
+        if jsonBody.keys.first != "" {
+            do {
+                request.HTTPBody = try! NSJSONSerialization.dataWithJSONObject(jsonBody, options: .PrettyPrinted)
+            }
         }
 
         /* 4. Make the request */
@@ -134,7 +152,7 @@ class OTMClient: NSObject {
             }
 
             /* 5/6. Parse the data and use the data (happens in completion handler) */
-            OTMClient.parseJSONWithCompletionHandler(data, completionHandler: completionHandler)
+            OTMClient.parseJSONWithCompletionHandler(Api, data: data, completionHandler: completionHandler)
         }
 
         /* 7. Start the request */
@@ -154,16 +172,22 @@ class OTMClient: NSObject {
     }
 
     /* Helper: Given raw JSON, return a usable Foundation object */
-    class func parseJSONWithCompletionHandler(data: NSData, completionHandler: (result: AnyObject!, error: NSError?) -> Void) {
+    class func parseJSONWithCompletionHandler(Api: String, data: NSData, completionHandler: (result: AnyObject!, error: NSError?) -> Void) {
+
+        var newData: NSData!
+        if Api == "Udacity" {
+            newData = data.subdataWithRange(NSMakeRange(5, data.length - 5)) /* subset response data! */
+        } else {
+            newData = data
+        }
 
         var parsedResult: AnyObject!
         do {
-            parsedResult = try NSJSONSerialization.JSONObjectWithData(data, options: .AllowFragments)
+            parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
         } catch {
             let userInfo = [NSLocalizedDescriptionKey : "Could not parse the data as JSON: '\(data)'"]
             completionHandler(result: nil, error: NSError(domain: "parseJSONWithCompletionHandler", code: 1, userInfo: userInfo))
         }
-
         completionHandler(result: parsedResult, error: nil)
     }
 
@@ -181,12 +205,12 @@ class OTMClient: NSObject {
             /* Append it */
             urlVars += [key + "=" + "\(escapedValue!)"]
         }
-
+        
         return (!urlVars.isEmpty ? "?" : "") + urlVars.joinWithSeparator("&")
     }
-
+    
     // MARK: Shared Instance
-
+    
     class func sharedInstance() -> OTMClient {
         struct Singleton {
             static var sharedInstance = OTMClient()

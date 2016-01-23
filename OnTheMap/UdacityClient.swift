@@ -9,142 +9,89 @@
 import Foundation
 
 extension OTMClient {
-    
+
     // MARK: - API Functions
 
     // Login to Udacity with user-supplied credentials
     func loginAndCreateSession(completionHandler: (success: Bool, errorString: String?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: OTMConstants.Constants.AuthorizationURL + OTMConstants.Methods.AuthenticationSessionNew )!)
-        request.HTTPMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"udacity\": {\"username\": \"\(username)\", \"password\": \"\(password)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
-        
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil {
-                completionHandler(success: false, errorString: "The internet connection appears to be offline")
-            } else {
-                let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5))
-                let parsedResult: AnyObject!
-                do {
-                    parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
-                } catch {
-                    parsedResult = nil
-                    print("Could not parse the data as JSON: '\(data)'")
-                    return
-                }
 
-                guard let registered = parsedResult["account"] as? NSDictionary else {
-                    completionHandler(success: false, errorString: "Wrong email or password")
-                    return
-                }
+        let urlString = OTMConstants.Constants.UdacityBaseUrl + OTMConstants.Methods.AuthenticationSessionNew
+        let jsonBody : [String:AnyObject] = [
+            OTMConstants.JSONBodyKeys.Udacity : [
+                OTMConstants.JSONBodyKeys.Username: username,
+                OTMConstants.JSONBodyKeys.Password: password,
+            ]
+        ]
 
-                self.uniqueKey = registered["key"] as! String
-                self.getUserData()
-                completionHandler(success: true, errorString: nil)
+        /* 2. Make the request */
+        taskForPOSTMethod("Udacity", HTTPMethod: "POST", urlString: urlString, parameters: ["":""], jsonBody: jsonBody) { results, error in
+
+            guard let result = results["account"] as? NSDictionary else {
+                completionHandler(success: false, errorString: "Wrong email or password")
+                return
             }
+
+            self.uniqueKey = result["key"] as! String
+            self.getUserData()
+            completionHandler(success: true, errorString: nil)
         }
-        task.resume()
     }
 
     // logout and destroy session
     func logoutAndDeleteSession(completionHandler: (success: Bool, errorString: String?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: OTMConstants.Constants.AuthorizationURL + OTMConstants.Methods.AuthenticationSessionNew )!)
-        request.HTTPMethod = "DELETE"
-        var xsrfCookie: NSHTTPCookie? = nil
-        let sharedCookieStorage = NSHTTPCookieStorage.sharedHTTPCookieStorage()
 
-        for cookie in sharedCookieStorage.cookies! {
-            if cookie.name == "XSRF-TOKEN" { xsrfCookie = cookie }
-        }
+        let urlString = "https://www.udacity.com/api/session"
+        // let urlString = OTMConstants.Constants.UdacityBaseUrl + OTMConstants.Methods.AuthenticationSessionNew
 
-        if let xsrfCookie = xsrfCookie {
-            request.setValue(xsrfCookie.value, forHTTPHeaderField: "X-XSRF-TOKEN")
-        }
+        /* 2. Make the request */
+        taskForPOSTMethod("Udacity", HTTPMethod: "DELETE", urlString: urlString, parameters: ["":""], jsonBody: ["":""]) { JSONResult, error in
 
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil {
-                completionHandler(success: false, errorString: "The internet connection appears to be offline")
-            } else {
-                let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5))
-                let parsedResult: AnyObject!
-                do {
-                    parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
-                } catch {
-                    parsedResult = nil
-                    print("Could not parse the data as JSON: '\(data)'")
-                    return
-                }
-                guard parsedResult["session"] != nil else {
-                    completionHandler(success: false, errorString: "Could not logout")
-                    return
-                }
-                completionHandler(success: true, errorString: nil)
+            guard JSONResult["session"] != nil else {
+                completionHandler(success: false, errorString: "Could not logout")
+                return
             }
+            completionHandler(success: true, errorString: nil)
         }
-        task.resume()
     }
 
     // get user first name and last name
     func getUserData() {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/users/\(uniqueKey)")!)
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil {
+
+        let urlString =
+        OTMConstants.Constants.UdacityBaseUrl
+            + OTMConstants.Methods.Account
+            + "/\(uniqueKey)"
+
+        taskForGETMethod("Udacity", urlString: urlString, parameters: ["":""]) { result, error in
+            guard let user = result["user"] as? NSDictionary else {
+                print("Couldn't find the user")
                 return
-            } else {
-                let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5))
-                let parsedResult: AnyObject!
-                do {
-                    parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
-                } catch {
-                    parsedResult = nil
-                    print("Could not parse the data as JSON: '\(data)'")
-                    return
-                }
-
-                guard let user = parsedResult["user"] as? NSDictionary else {
-                    print("Couldn't find the user")
-                    return
-                }
-
-                self.userFirstName = user["first_name"] as! String
-                self.userLastName = user["last_name"] as! String
             }
+
+            self.userFirstName = user["first_name"] as! String
+            self.userLastName = user["last_name"] as! String
         }
-        task.resume()
     }
 
     func sessionWithFacebookAuthentication(completionHandler: (success: Bool, errorString: String?) -> Void) {
-        let request = NSMutableURLRequest(URL: NSURL(string: "https://www.udacity.com/api/session")!)
-        request.HTTPMethod = "POST"
-        request.addValue("application/json", forHTTPHeaderField: "Accept")
-        request.addValue("application/json", forHTTPHeaderField: "Content-Type")
-        request.HTTPBody = "{\"facebook_mobile\": {\"access_token\": \"\(facebookAccessToken)\"}}".dataUsingEncoding(NSUTF8StringEncoding)
-        let session = NSURLSession.sharedSession()
-        let task = session.dataTaskWithRequest(request) { data, response, error in
-            if error != nil {
-                completionHandler(success: false, errorString: "The internet connection appears to be offline")
-            } else {
-                let newData = data!.subdataWithRange(NSMakeRange(5, data!.length - 5))
-                let parsedResult: AnyObject!
-                do {
-                    parsedResult = try NSJSONSerialization.JSONObjectWithData(newData, options: .AllowFragments)
-                } catch {
-                    parsedResult = nil
-                    print("Could not parse the data as JSON: '\(data)'")
-                    return
-                }
-                
-                guard let registered = parsedResult["account"] as? NSDictionary else {
-                    completionHandler(success: false, errorString: "Wrong email or password")
-                    return
-                }
+        let urlString = OTMConstants.Constants.UdacityBaseUrl + OTMConstants.Methods.AuthenticationSessionNew
 
-                self.uniqueKey = registered["key"] as! String
-                self.getUserData()
-                completionHandler(success: true, errorString: nil)
+        let jsonBody : [String:AnyObject] = [
+            OTMConstants.JSONBodyKeys.facebookMobile: [
+                OTMConstants.JSONBodyKeys.accessToken: facebookAccessToken
+            ]
+        ]
+
+        taskForPOSTMethod("Udacity", HTTPMethod: "POST", urlString: urlString, parameters: ["":""], jsonBody: jsonBody) { results, error in
+
+            guard let result = results["account"] as? NSDictionary else {
+                completionHandler(success: false, errorString: "Wrong email or password")
+                return
             }
+
+            self.uniqueKey = result["key"] as! String
+            self.getUserData()
+            completionHandler(success: true, errorString: nil)
         }
-        task.resume()
     }
 }

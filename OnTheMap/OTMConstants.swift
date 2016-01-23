@@ -18,21 +18,18 @@ class OTMConstants: NSObject {
         static let RestApiKey: String = "QuWThTdiRmTux3YaDseUSEpUKo7aBYM737yKd4gY"
 
         // MARK: URLs
-        static let BaseUrl : String = "https://api.parse.com/1/classes/StudentLocation"
-        static let AuthorizationURL : String = "https://www.udacity.com/api"
+        static let ParseBaseUrl : String = "https://api.parse.com/1/classes/StudentLocation"
+        static let UdacityBaseUrl : String = "https://www.udacity.com/api"
     }
 
     // MARK: Methods
     struct Methods {
 
         // MARK: Account
-        static let Account = "users"
+        static let Account = "/users"
 
         // MARK: Authentication
         static let AuthenticationSessionNew = "/session"
-
-        // MARK: Search
-        static let SearchMovie = "search/movie"
 
         // MARK: Config
         static let Config = "configuration"
@@ -53,10 +50,11 @@ class OTMConstants: NSObject {
 
     // MARK: JSON Body Keys
     struct JSONBodyKeys {
-        static let MediaType = "media_type"
-        static let MediaID = "media_id"
-        static let Favorite = "favorite"
-        static let Watchlist = "watchlist"
+        static let Udacity = "udacity"
+        static let Username = "username"
+        static let Password = "password"
+        static let facebookMobile = "facebook_mobile"
+        static let accessToken = "access_token"
     }
 
     // MARK: JSON Response Keys
