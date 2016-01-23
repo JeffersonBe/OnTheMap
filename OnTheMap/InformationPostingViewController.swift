@@ -64,7 +64,8 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
     }
 
     @IBAction func updateMapView(sender: AnyObject) {
-        guard locationTextField.text != nil else {
+        guard locationTextField.text != "" else {
+            locationTextField.attributedPlaceholder = NSAttributedString(string: "Please add a location", attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
             return
         }
 
@@ -108,7 +109,9 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
     }
 
     @IBAction func submitLocationAndLink(sender: AnyObject) {
-        guard linkShareTextField.text != nil else {
+        guard linkShareTextField.text != "" else {
+            linkShareTextField.attributedPlaceholder = NSAttributedString(string: "Please add a link", attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
+
             return
         }
 
