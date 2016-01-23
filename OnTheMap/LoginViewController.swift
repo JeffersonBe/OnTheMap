@@ -39,6 +39,7 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
 
+        /* if user already logged in Facebook, directly redirect to login */
         if let token = FBSDKAccessToken.currentAccessToken()?.tokenString {
             facebookLogin(token)
         }

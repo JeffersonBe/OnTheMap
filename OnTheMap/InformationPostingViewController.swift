@@ -18,6 +18,9 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
+    @IBOutlet weak var locationSubmitView: UIView!
+    @IBOutlet weak var linkSubmitView: UIView!
+    
     var MethodType: String = ""
     var mapString: String = ""
     var mediaURL: String = ""
@@ -33,6 +36,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
 
     override func viewDidLoad() {
         super.viewDidLoad()
+        linkSubmitView.hidden = true
         activityIndicator.hidden = true
 
         locationTextField.delegate = self
@@ -107,6 +111,8 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                 self.mapView.showAnnotations(self.mapView.annotations, animated: true)
                 self.activityIndicator.hidden = true
                 self.activityIndicator.stopAnimating()
+                self.locationSubmitView.hidden = true
+                self.linkSubmitView.hidden = false
             }
         }
     }
