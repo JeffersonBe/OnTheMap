@@ -11,17 +11,13 @@ import UIKit
 class LocationTableViewController: UIViewController, UITableViewDelegate, UITableViewDataSource {
 
     @IBOutlet weak var table: UITableView!
-    let activityIndicator = UIActivityIndicatorView(activityIndicatorStyle: UIActivityIndicatorViewStyle.Gray)
     @IBOutlet weak var refreshControl: UIRefreshControl!
+    var indicator = CustomUIActivityIndicatorView()
 
     var locations: [OTMLocation] = [OTMLocation]()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityIndicator.hidden = true
-        activityIndicator.center = view.center
-        view.addSubview(activityIndicator)
-        activityIndicator.bringSubviewToFront(view)
 
         table.delegate = self
         table.dataSource = self
@@ -55,21 +51,21 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func refresh(sender:AnyObject) {
-        activityIndicator.hidden = false
-        activityIndicator.startAnimating()
+        indicator.startActivity()
+        view.addSubview(indicator)
         OTMClient.sharedInstance().getLocations { success, locations, error in
             if success {
                 self.locations = locations!
                 dispatch_async(dispatch_get_main_queue()) {
                     self.table.reloadData()
                     self.refreshControl?.endRefreshing()
-                    self.activityIndicator.hidden = true
-                    self.activityIndicator.stopAnimating()
+                    self.indicator.stopActivity()
+                    self.indicator.removeFromSuperview()
                 }
             } else {
                 dispatch_async(dispatch_get_main_queue()) {
-                    self.activityIndicator.hidden = true
-                    self.activityIndicator.stopAnimating()
+                    self.indicator.stopActivity()
+                    self.indicator.removeFromSuperview()
                     self.refreshControl?.endRefreshing()
                     let errorAlert = UIAlertController(title: "Unable to load locations", message: error, preferredStyle: UIAlertControllerStyle.Alert)
                     errorAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))

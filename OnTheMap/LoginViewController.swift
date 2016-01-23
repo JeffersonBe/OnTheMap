@@ -18,14 +18,13 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
     @IBOutlet weak var informationLabel: UILabel!
-    @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
 
     var tapRecognizer: UITapGestureRecognizer? = nil
+    var indicator = CustomUIActivityIndicatorView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        activityIndicator.hidden = true
-        
+
         emailTextField.delegate = self
         passwordTextField.delegate = self
 
@@ -77,15 +76,15 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
         OTMClient.sharedInstance().username = emailTextField.text!
         OTMClient.sharedInstance().password = passwordTextField.text!
 
-        activityIndicator.startAnimating()
-        activityIndicator.hidden = false
+        indicator.startActivity()
+        self.view.addSubview(indicator)
         OTMClient.sharedInstance().loginAndCreateSession() { (success, errorString) in
             if success {
                 self.completeLogin()
             } else {
                 dispatch_async(dispatch_get_main_queue(), {
-                    self.activityIndicator.stopAnimating()
-                    self.activityIndicator.hidden = true
+                    self.indicator.stopActivity()
+                    self.indicator.removeFromSuperview()
                     let errorAlert = UIAlertController(title: errorString!, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
                     errorAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(errorAlert, animated: true, completion: nil)
@@ -123,16 +122,16 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     }
 
     func facebookLogin(tokenString: String) {
-        activityIndicator.startAnimating()
-        activityIndicator.hidden = false
+        indicator.startActivity()
+        self.view.addSubview(indicator)
         OTMClient.sharedInstance().facebookAccessToken = tokenString
         OTMClient.sharedInstance().sessionWithFacebookAuthentication() { success, errorString in
             if success {
                 let rootNavVC = self.storyboard!.instantiateViewControllerWithIdentifier("rootNavVC") as! UINavigationController
                 self.presentViewController(rootNavVC, animated: true, completion: nil)
             } else {
-                self.activityIndicator.stopAnimating()
-                self.activityIndicator.hidden = true
+                self.indicator.stopActivity()
+                self.indicator.removeFromSuperview()
                 self.informationLabel.text = "Facebook login didn't work"
             }
 

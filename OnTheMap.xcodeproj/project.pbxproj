@@ -23,6 +23,7 @@
 		B4B4AD6C1C45667600811E3F /* TabBarViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4B4AD6B1C45667600811E3F /* TabBarViewController.swift */; };
 		B4E0E9421C4A972100651016 /* FBSDKCoreKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4E0E9401C4A972100651016 /* FBSDKCoreKit.framework */; };
 		B4E0E9431C4A972100651016 /* FBSDKLoginKit.framework in Frameworks */ = {isa = PBXBuildFile; fileRef = B4E0E9411C4A972100651016 /* FBSDKLoginKit.framework */; };
+		B4E357111C541D8500F4E80C /* CustomUIActivityIndicatorView.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4E357101C541D8500F4E80C /* CustomUIActivityIndicatorView.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -45,6 +46,7 @@
 		B4BEE4E41C4B00E400C774ED /* Bridging-Header.h */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.c.h; path = "Bridging-Header.h"; sourceTree = "<group>"; };
 		B4E0E9401C4A972100651016 /* FBSDKCoreKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKCoreKit.framework; sourceTree = "<group>"; };
 		B4E0E9411C4A972100651016 /* FBSDKLoginKit.framework */ = {isa = PBXFileReference; lastKnownFileType = wrapper.framework; path = FBSDKLoginKit.framework; sourceTree = "<group>"; };
+		B4E357101C541D8500F4E80C /* CustomUIActivityIndicatorView.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = CustomUIActivityIndicatorView.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -87,6 +89,7 @@
 				B4A0A9EB1C427C8B002F0356 /* UdacityClient.swift */,
 				B48B50E31C42EFFA001ED7E1 /* ParseClient.swift */,
 				B48B50DD1C42B651001ED7E1 /* OTMConstants.swift */,
+				B4E357101C541D8500F4E80C /* CustomUIActivityIndicatorView.swift */,
 			);
 			name = Helpers;
 			sourceTree = "<group>";
@@ -214,6 +217,7 @@
 				B4AA859E1C3EF37D00807D01 /* AppDelegate.swift in Sources */,
 				B48B50DE1C42B651001ED7E1 /* OTMConstants.swift in Sources */,
 				B4B4AD6A1C4504AD00811E3F /* InformationPostingViewController.swift in Sources */,
+				B4E357111C541D8500F4E80C /* CustomUIActivityIndicatorView.swift in Sources */,
 				B48B50E01C42D511001ED7E1 /* MapViewController.swift in Sources */,
 				B4B4AD6C1C45667600811E3F /* TabBarViewController.swift in Sources */,
 				B4A0A9EC1C427C8B002F0356 /* UdacityClient.swift in Sources */,
