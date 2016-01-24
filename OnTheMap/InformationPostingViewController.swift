@@ -65,7 +65,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
 
     @IBAction func updateMapView(sender: AnyObject) {
         guard locationTextField.text != "" else {
-            locationTextField.attributedPlaceholder = NSAttributedString(string: "Please add a location", attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
+            locationTextField.attributedPlaceholder = NSAttributedString(string: OTMConstants.AppCopy.locationRequired, attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
             return
         }
 
@@ -77,7 +77,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         search.startWithCompletionHandler { response, error in
             guard let response = response else {
                 dispatch_async(dispatch_get_main_queue()) {
-                    self.throwFail("We're not able to found your location, please check it")
+                    self.throwFail(OTMConstants.AppCopy.unableToLoadLocation)
                     print("There was an error searching for: \(request.naturalLanguageQuery) error: \(error)")
                 }
                 return
@@ -110,8 +110,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
 
     @IBAction func submitLocationAndLink(sender: AnyObject) {
         guard linkShareTextField.text != "" else {
-            linkShareTextField.attributedPlaceholder = NSAttributedString(string: "Please add a link", attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
-
+            linkShareTextField.attributedPlaceholder = NSAttributedString(string: OTMConstants.AppCopy.linkRequired, attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
             return
         }
 
@@ -145,7 +144,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
 
     func throwFail(title: String) {
         let errorAlert = UIAlertController(title: title, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-        errorAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+        errorAlert.addAction(UIAlertAction(title: OTMConstants.AppCopy.dismiss, style: UIAlertActionStyle.Default, handler: nil))
         presentViewController(errorAlert, animated: true, completion: nil)
     }
 

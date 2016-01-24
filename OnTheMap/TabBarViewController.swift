@@ -71,11 +71,11 @@ class TabBarViewController: UITabBarController {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.indicator.stopActivity()
                     self.indicator.removeFromSuperview()
-                    let propositionAlert = UIAlertController(title: "Add your location", message: nil, preferredStyle: UIAlertControllerStyle.Alert)
-                    propositionAlert.addAction(UIAlertAction(title: "Overwrite", style: UIAlertActionStyle.Default, handler: { action in
+                    let propositionAlert = UIAlertController(title: OTMConstants.AppCopy.overwriteLocation, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
+                    propositionAlert.addAction(UIAlertAction(title: OTMConstants.AppCopy.overwrite, style: UIAlertActionStyle.Default, handler: { action in
                         self.addLocation("PUT")
                     }))
-                    propositionAlert.addAction(UIAlertAction(title: "Cancel", style: UIAlertActionStyle.Cancel, handler: nil))
+                    propositionAlert.addAction(UIAlertAction(title: OTMConstants.AppCopy.cancel, style: UIAlertActionStyle.Cancel, handler: nil))
                     self.presentViewController(propositionAlert, animated: true, completion: nil)
                 }
             } else {

@@ -67,8 +67,8 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
                     self.indicator.stopActivity()
                     self.indicator.removeFromSuperview()
                     self.refreshControl?.endRefreshing()
-                    let errorAlert = UIAlertController(title: "Unable to load locations", message: error, preferredStyle: UIAlertControllerStyle.Alert)
-                    errorAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+                    let errorAlert = UIAlertController(title: OTMConstants.AppCopy.unableToLoadLocation, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+                    errorAlert.addAction(UIAlertAction(title: OTMConstants.AppCopy.dismiss, style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(errorAlert, animated: true, completion: nil)
                 }
             }

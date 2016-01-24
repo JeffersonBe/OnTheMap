@@ -91,4 +91,17 @@ class OTMConstants: NSObject {
         static let uniqueKey = "uniqueKey"
         static let updatedAt = "updatedAt"
     }
+
+    struct AppCopy {
+        static let emailRequired = "Please enter your email"
+        static let passwordRequired = "Please enter your password"
+        static let locationRequired = "Please enter a location"
+        static let linkRequired = "Please enter a link to share"
+        static let unableToLoadLocation = "Sorry, we're unable to load locations"
+        static let unableToLogout = "Sorry, we're unable to log you out"
+        static let overwriteLocation = "Overwrite your location?"
+        static let dismiss = "Dismiss"
+        static let overwrite = "Overwrite"
+        static let cancel = "Cancel"
+    }
 }

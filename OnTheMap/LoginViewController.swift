@@ -62,14 +62,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
 
     @IBAction func login(sender: AnyObject) {
         guard emailTextField.text != "" else {
-            informationLabel.textColor = UIColor.redColor()
-            informationLabel.text = "Please enter your email"
+            emailTextField.attributedPlaceholder = NSAttributedString(string: OTMConstants.AppCopy.emailRequired, attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
             return
         }
 
         guard passwordTextField.text != "" else {
-            informationLabel.textColor = UIColor.redColor()
-            informationLabel.text = "Please enter your password"
+            passwordTextField.attributedPlaceholder = NSAttributedString(string: OTMConstants.AppCopy.passwordRequired, attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
             return
         }
 

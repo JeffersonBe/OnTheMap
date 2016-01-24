@@ -101,8 +101,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.indicator.stopActivity()
                     self.indicator.removeFromSuperview()
-                    let errorAlert = UIAlertController(title: "Unable to load locations", message: error, preferredStyle: UIAlertControllerStyle.Alert)
-                    errorAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+                    let errorAlert = UIAlertController(title: OTMConstants.AppCopy.unableToLoadLocation, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+                    errorAlert.addAction(UIAlertAction(title: OTMConstants.AppCopy.dismiss, style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(errorAlert, animated: true, completion: nil)
                 }
             }
@@ -122,8 +122,8 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.indicator.stopActivity()
                     self.indicator.removeFromSuperview()
-                let errorAlert = UIAlertController(title: "Unable to logout", message: error, preferredStyle: UIAlertControllerStyle.Alert)
-                errorAlert.addAction(UIAlertAction(title: "Dismiss", style: UIAlertActionStyle.Default, handler: nil))
+                let errorAlert = UIAlertController(title: OTMConstants.AppCopy.unableToLogout, message: error, preferredStyle: UIAlertControllerStyle.Alert)
+                errorAlert.addAction(UIAlertAction(title: OTMConstants.AppCopy.dismiss, style: UIAlertActionStyle.Default, handler: nil))
                 self.presentViewController(errorAlert, animated: true, completion: nil)
                 }
             }
