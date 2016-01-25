@@ -46,7 +46,7 @@
                                 <constraints>
                                     <constraint firstAttribute="height" constant="45" id="xgq-Jg-nNR"/>
                                 </constraints>
-                                <state key="normal" title="Log in with Facebook">
+                                <state key="normal" title="Log in with Udacity">
                                     <color key="titleColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                                 </state>
                                 <connections>
@@ -146,7 +146,7 @@
                                 <rect key="frame" x="0.0" y="20" width="600" height="580"/>
                             </mapView>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="P5A-r0-XDU" userLabel="linkSubmitView">
-                                <rect key="frame" x="130" y="60" width="340" height="140"/>
+                                <rect key="frame" x="130" y="80" width="340" height="140"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter a link to Share Here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="JUy-dS-1WY">
                                         <rect key="frame" x="22" y="60" width="296" height="30"/>
@@ -174,7 +174,7 @@
                                 </constraints>
                             </view>
                             <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="ji1-Da-4nY" userLabel="locationSubmitView">
-                                <rect key="frame" x="130" y="60" width="340" height="140"/>
+                                <rect key="frame" x="130" y="80" width="340" height="140"/>
                                 <subviews>
                                     <textField opaque="NO" clipsSubviews="YES" contentMode="scaleToFill" fixedFrame="YES" contentHorizontalAlignment="left" contentVerticalAlignment="center" borderStyle="roundedRect" placeholder="Enter your Location Here" textAlignment="natural" minimumFontSize="17" translatesAutoresizingMaskIntoConstraints="NO" id="Dcs-Ch-ZvF">
                                         <rect key="frame" x="22" y="60" width="296" height="30"/>
@@ -201,20 +201,37 @@
                                     <constraint firstAttribute="width" constant="340" id="gea-9f-Z5h"/>
                                 </constraints>
                             </view>
+                            <button opaque="NO" contentMode="scaleToFill" contentHorizontalAlignment="center" contentVerticalAlignment="center" buttonType="roundedRect" lineBreakMode="middleTruncation" translatesAutoresizingMaskIntoConstraints="NO" id="S8b-9M-3Ra">
+                                <rect key="frame" x="260" y="36" width="80" height="30"/>
+                                <color key="backgroundColor" red="1" green="1" blue="1" alpha="1" colorSpace="calibratedRGB"/>
+                                <constraints>
+                                    <constraint firstAttribute="width" constant="80" id="E6o-yT-OQG"/>
+                                </constraints>
+                                <fontDescription key="fontDescription" name="HelveticaNeue" family="Helvetica Neue" pointSize="15"/>
+                                <state key="normal" title="Cancel">
+                                    <color key="titleColor" red="1" green="0.0" blue="0.0" alpha="1" colorSpace="calibratedRGB"/>
+                                </state>
+                                <connections>
+                                    <action selector="cancelAction:" destination="GOL-zy-aeo" eventType="touchUpInside" id="B4I-TZ-r2W"/>
+                                </connections>
+                            </button>
                         </subviews>
                         <color key="backgroundColor" white="1" alpha="1" colorSpace="calibratedWhite"/>
                         <constraints>
+                            <constraint firstItem="S8b-9M-3Ra" firstAttribute="centerX" secondItem="9MX-CA-Sbt" secondAttribute="centerX" id="1db-8X-mLE"/>
+                            <constraint firstItem="S8b-9M-3Ra" firstAttribute="top" secondItem="wbJ-dU-9jb" secondAttribute="bottom" constant="16" id="685-rh-D9s"/>
                             <constraint firstItem="P5A-r0-XDU" firstAttribute="centerX" secondItem="TvN-1e-ldw" secondAttribute="centerX" id="FfF-S1-bq6"/>
+                            <constraint firstItem="ji1-Da-4nY" firstAttribute="top" secondItem="S8b-9M-3Ra" secondAttribute="bottom" constant="14" id="QvA-zF-gYd"/>
                             <constraint firstItem="9MX-CA-Sbt" firstAttribute="leading" secondItem="TvN-1e-ldw" secondAttribute="leadingMargin" constant="-20" id="Rg7-IF-dq5"/>
                             <constraint firstItem="ji1-Da-4nY" firstAttribute="centerX" secondItem="TvN-1e-ldw" secondAttribute="centerX" id="ZJ7-pr-eks"/>
-                            <constraint firstItem="ji1-Da-4nY" firstAttribute="top" secondItem="wbJ-dU-9jb" secondAttribute="bottom" constant="40" id="bkB-gC-Yts"/>
-                            <constraint firstItem="P5A-r0-XDU" firstAttribute="top" secondItem="wbJ-dU-9jb" secondAttribute="bottom" constant="40" id="dQD-8J-39v"/>
+                            <constraint firstItem="P5A-r0-XDU" firstAttribute="top" secondItem="S8b-9M-3Ra" secondAttribute="bottom" constant="14" id="n7a-E9-Lqn"/>
                             <constraint firstItem="gLN-mt-tV2" firstAttribute="top" secondItem="9MX-CA-Sbt" secondAttribute="bottom" id="puc-tx-ZoY"/>
                             <constraint firstAttribute="trailingMargin" secondItem="9MX-CA-Sbt" secondAttribute="trailing" constant="-20" id="rHJ-vA-kaW"/>
                             <constraint firstItem="9MX-CA-Sbt" firstAttribute="top" secondItem="wbJ-dU-9jb" secondAttribute="bottom" id="zkl-0b-x1c"/>
                         </constraints>
                     </view>
                     <connections>
+                        <outlet property="cancelButton" destination="S8b-9M-3Ra" id="fCe-3E-eh3"/>
                         <outlet property="linkShareTextField" destination="JUy-dS-1WY" id="wao-bu-KHg"/>
                         <outlet property="linkSubmitView" destination="P5A-r0-XDU" id="rtV-vR-Thw"/>
                         <outlet property="locationSearchButton" destination="8FL-3x-3XO" id="1aD-sF-RqU"/>

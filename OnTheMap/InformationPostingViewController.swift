@@ -16,6 +16,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
     @IBOutlet weak var linkShareTextField: UITextField!
     @IBOutlet weak var submitButton: UIButton!
     @IBOutlet weak var mapView: MKMapView!
+    @IBOutlet weak var cancelButton: UIButton!
     @IBOutlet weak var locationSubmitView: UIView!
     @IBOutlet weak var linkSubmitView: UIView!
 
@@ -31,16 +32,20 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
     var tapRecognizer: UITapGestureRecognizer? = nil
     var keyboardAdjusted = false
     var lastKeyboardOffset : CGFloat = 0.0
+    var indicator = CustomUIActivityIndicatorView()
 
     override func viewDidLoad() {
         super.viewDidLoad()
         linkSubmitView.hidden = true
+        mapView.delegate = self
 
         locationTextField.delegate = self
         linkShareTextField.delegate = self
 
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1
+
+        cancelButton.layer.cornerRadius = 15
     }
 
     override func viewWillAppear(animated: Bool) {
@@ -75,7 +80,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         let search = MKLocalSearch(request: request)
 
         search.startWithCompletionHandler { response, error in
-            guard let response = response else {
+            guard error === nil else {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.throwFail(OTMConstants.AppCopy.unableToLoadLocation)
                     print("There was an error searching for: \(request.naturalLanguageQuery) error: \(error)")
@@ -83,10 +88,12 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                 return
             }
 
-            if let firstResult = response.mapItems.first {
+            if let firstResult = response!.mapItems.first {
                 self.latitude = CLLocationDegrees((firstResult.placemark.location?.coordinate.latitude)!)
                 self.longitude = CLLocationDegrees((firstResult.placemark.location?.coordinate.longitude)!)
-                self.street = (firstResult.placemark.addressDictionary?["Street"])! as! String
+                if let street = (firstResult.placemark.addressDictionary?["Street"]) as? String {
+                    self.street = street
+                }
                 self.city = (firstResult.placemark.addressDictionary?["City"])! as! String
                 self.country =  (firstResult.placemark.addressDictionary?["Country"])! as! String
                 self.mapString = "\(self.street), \(self.city), \(self.country)"
@@ -141,11 +148,26 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             }
         }
     }
+    @IBAction func cancelAction(sender: AnyObject) {
+        dismissViewControllerAnimated(true, completion: nil)
+    }
 
     func throwFail(title: String) {
         let errorAlert = UIAlertController(title: title, message: nil, preferredStyle: UIAlertControllerStyle.Alert)
         errorAlert.addAction(UIAlertAction(title: OTMConstants.AppCopy.dismiss, style: UIAlertActionStyle.Default, handler: nil))
         presentViewController(errorAlert, animated: true, completion: nil)
+    }
+
+    // MARK: MapKit Delegate
+
+    func mapViewWillStartRenderingMap(mapView: MKMapView) {
+        indicator.startActivity()
+        view.insertSubview(indicator, atIndex: 100)
+    }
+
+    func mapViewDidFinishRenderingMap(mapView: MKMapView, fullyRendered: Bool) {
+        indicator.stopActivity()
+        indicator.removeFromSuperview()
     }
 
     // Keyboard Management
