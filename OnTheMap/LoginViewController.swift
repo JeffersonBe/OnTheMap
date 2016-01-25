@@ -9,8 +9,9 @@
 import UIKit
 import FBSDKCoreKit
 import FBSDKLoginKit
+import MapKit
 
-class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButtonDelegate {
+class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButtonDelegate, MKMapViewDelegate {
 
     @IBOutlet weak var emailTextField: UITextField!
     @IBOutlet weak var passwordTextField: UITextField!
@@ -18,6 +19,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
     @IBOutlet weak var signupButton: UIButton!
     @IBOutlet weak var facebookLoginButton: FBSDKLoginButton!
     @IBOutlet weak var informationLabel: UILabel!
+
+    @IBOutlet weak var mapKit: MKMapView!
 
     var tapRecognizer: UITapGestureRecognizer? = nil
     var indicator = CustomUIActivityIndicatorView()
@@ -33,6 +36,12 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
 
         tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1
+
+        let blurEffect = UIBlurEffect(style: UIBlurEffectStyle.Dark)
+        let blurEffectView = UIVisualEffectView(effect: blurEffect)
+        blurEffectView.frame = view.bounds
+        blurEffectView.autoresizingMask = [.FlexibleWidth, .FlexibleHeight]
+        view.insertSubview(blurEffectView, aboveSubview: mapKit)
     }
 
     override func viewWillAppear(animated: Bool) {
