@@ -42,7 +42,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         locationTextField.delegate = self
         linkShareTextField.delegate = self
 
-        tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap")
+        tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
         tapRecognizer?.numberOfTapsRequired = 1
 
         cancelButton.layer.cornerRadius = 15
@@ -77,49 +77,52 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         indicator.startActivity()
         view.addSubview(indicator)
 
-        let request = MKLocalSearchRequest()
-        request.naturalLanguageQuery = "\(locationTextField.text)"
-        request.region = mapView.region
-        let search = MKLocalSearch(request: request)
+        let location: String = self.locationTextField.text!
+        let geocoder: CLGeocoder = CLGeocoder()
 
-        search.startWithCompletionHandler { response, error in
-            guard error === nil else {
+        geocoder.geocodeAddressString(location, completionHandler: {(placemarks: [CLPlacemark]?, error: NSError?) -> Void in
+
+            guard error == nil else {
                 dispatch_async(dispatch_get_main_queue()) {
                     self.indicator.stopActivity()
                     self.indicator.removeFromSuperview()
                     self.throwFail(OTMConstants.AppCopy.unableToLoadLocation)
-                    print("There was an error searching for: \(request.naturalLanguageQuery) error: \(error)")
+                    print("There was an error searching for: \(self.locationTextField.text)")
                 }
                 return
             }
 
-            if let firstResult = response!.mapItems.first {
-                self.latitude = CLLocationDegrees((firstResult.placemark.location?.coordinate.latitude)!)
-                self.longitude = CLLocationDegrees((firstResult.placemark.location?.coordinate.longitude)!)
-                if let street = (firstResult.placemark.addressDictionary?["Street"]) as? String {
+            if (placemarks?.count > 0) {
+                let topResult: CLPlacemark = (placemarks?[0])!
+                let placemark: MKPlacemark = MKPlacemark(placemark: topResult)
+
+                self.latitude = CLLocationDegrees((placemark.location?.coordinate.latitude)!)
+                self.longitude = CLLocationDegrees((placemark.location?.coordinate.longitude)!)
+                if let street = (placemark.addressDictionary?["Street"]) as? String {
                     self.street = street
                 }
-                self.city = (firstResult.placemark.addressDictionary?["City"])! as! String
-                self.country =  (firstResult.placemark.addressDictionary?["Country"])! as! String
+                self.city = (placemark.addressDictionary?["City"])! as! String
+                self.country =  (placemark.addressDictionary?["Country"])! as! String
                 self.mapString = "\(self.street), \(self.city), \(self.country)"
-            }
+                self.mapView.addAnnotation(placemark)
 
-            var annotations = [MKPointAnnotation]()
-            let coordinate = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
-            let annotation = MKPointAnnotation()
-            annotation.coordinate = coordinate
-            annotations.append(annotation)
+                var annotations = [MKPointAnnotation]()
+                let coordinate = CLLocationCoordinate2D(latitude: self.latitude, longitude: self.longitude)
+                let annotation = MKPointAnnotation()
+                annotation.coordinate = coordinate
+                annotations.append(annotation)
 
-            dispatch_async(dispatch_get_main_queue()) {
-                self.mapView.addAnnotations(annotations)
-                self.mapView.reloadInputViews()
-                self.mapView.showAnnotations(self.mapView.annotations, animated: true)
-                self.locationSubmitView.hidden = true
-                self.linkSubmitView.hidden = false
-                self.indicator.stopActivity()
-                self.indicator.removeFromSuperview()
+                dispatch_async(dispatch_get_main_queue()) {
+                    self.mapView.addAnnotations(annotations)
+                    self.mapView.reloadInputViews()
+                    self.mapView.showAnnotations(self.mapView.annotations, animated: true)
+                    self.locationSubmitView.hidden = true
+                    self.linkSubmitView.hidden = false
+                    self.indicator.stopActivity()
+                    self.indicator.removeFromSuperview()
+                }
             }
-        }
+        })
     }
 
     @IBAction func submitLocationAndLink(sender: AnyObject) {
@@ -228,15 +231,15 @@ extension InformationPostingViewController {
             keyboardAdjusted = true
         }
     }
-
+    
     func keyboardWillHide(notification: NSNotification) {
-
+        
         if keyboardAdjusted == true {
             view.superview?.frame.origin.y += lastKeyboardOffset
             keyboardAdjusted = false
         }
     }
-
+    
     func getKeyboardHeight(notification: NSNotification) -> CGFloat {
         let userInfo = notification.userInfo
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
