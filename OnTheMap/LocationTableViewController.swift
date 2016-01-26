@@ -25,6 +25,10 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
 
         refreshControl?.addTarget(self, action: "refresh:", forControlEvents: UIControlEvents.ValueChanged)
     }
+
+    override func viewWillAppear(animated: Bool) {
+        refresh(true)
+    }
     
     // MARK: UITableViewController
 

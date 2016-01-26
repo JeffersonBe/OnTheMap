@@ -112,7 +112,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 
     func logout(){
-        manager.locationArray.removeAll()
         OTMClient.sharedInstance().logoutAndDeleteSession { success, error in
             if success {
                 dispatch_async(dispatch_get_main_queue()) {
@@ -127,10 +126,5 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 }
             }
         }
-    }
-
-    func addLocation() {
-        let controller = self.storyboard!.instantiateViewControllerWithIdentifier("InformationPostingViewController") as! InformationPostingViewController
-        self.presentViewController(controller, animated: true, completion: nil)
     }
 }
