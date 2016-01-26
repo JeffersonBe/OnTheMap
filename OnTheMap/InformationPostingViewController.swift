@@ -74,6 +74,9 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
             return
         }
 
+        indicator.startActivity()
+        view.addSubview(indicator)
+
         let request = MKLocalSearchRequest()
         request.naturalLanguageQuery = "\(locationTextField.text)"
         request.region = mapView.region
@@ -82,6 +85,8 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         search.startWithCompletionHandler { response, error in
             guard error === nil else {
                 dispatch_async(dispatch_get_main_queue()) {
+                    self.indicator.stopActivity()
+                    self.indicator.removeFromSuperview()
                     self.throwFail(OTMConstants.AppCopy.unableToLoadLocation)
                     print("There was an error searching for: \(request.naturalLanguageQuery) error: \(error)")
                 }
@@ -111,11 +116,15 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                 self.mapView.showAnnotations(self.mapView.annotations, animated: true)
                 self.locationSubmitView.hidden = true
                 self.linkSubmitView.hidden = false
+                self.indicator.stopActivity()
+                self.indicator.removeFromSuperview()
             }
         }
     }
 
     @IBAction func submitLocationAndLink(sender: AnyObject) {
+        indicator.startActivity()
+        view.addSubview(indicator)
         guard linkShareTextField.text != "" else {
             linkShareTextField.attributedPlaceholder = NSAttributedString(string: OTMConstants.AppCopy.linkRequired, attributes: [NSForegroundColorAttributeName: UIColor.redColor()])
             return
@@ -129,6 +138,8 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                     }
                 } else {
                     dispatch_async(dispatch_get_main_queue()) {
+                        self.indicator.stopActivity()
+                        self.indicator.removeFromSuperview()
                         self.throwFail(errorString!)
                     }
                 }
@@ -142,6 +153,8 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                     }
                 } else {
                     dispatch_async(dispatch_get_main_queue()) {
+                        self.indicator.stopActivity()
+                        self.indicator.removeFromSuperview()
                         self.throwFail(errorString!)
                     }
                 }

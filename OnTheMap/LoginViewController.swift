@@ -27,10 +27,8 @@ class LoginViewController: UIViewController, UITextFieldDelegate, FBSDKLoginButt
 
     override func viewDidLoad() {
         super.viewDidLoad()
-
         emailTextField.delegate = self
         passwordTextField.delegate = self
-
         facebookLoginButton.delegate = self
         facebookLoginButton.readPermissions = ["public_profile", "email"]
 
