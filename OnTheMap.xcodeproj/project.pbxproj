@@ -8,6 +8,7 @@
 
 /* Begin PBXBuildFile section */
 		B4273D471C52516100E2AB8D /* OTMClient.swift in Sources */ = {isa = PBXBuildFile; fileRef = B4273D461C52516100E2AB8D /* OTMClient.swift */; };
+		B47E40271C57AA4B00DB58ED /* OTMLocationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = B47E40261C57AA4B00DB58ED /* OTMLocationManager.swift */; };
 		B48B50DE1C42B651001ED7E1 /* OTMConstants.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48B50DD1C42B651001ED7E1 /* OTMConstants.swift */; };
 		B48B50E01C42D511001ED7E1 /* MapViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48B50DF1C42D511001ED7E1 /* MapViewController.swift */; };
 		B48B50E21C42DC2C001ED7E1 /* OTMLocation.swift in Sources */ = {isa = PBXBuildFile; fileRef = B48B50E11C42DC2C001ED7E1 /* OTMLocation.swift */; };
@@ -28,6 +29,7 @@
 
 /* Begin PBXFileReference section */
 		B4273D461C52516100E2AB8D /* OTMClient.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMClient.swift; sourceTree = "<group>"; };
+		B47E40261C57AA4B00DB58ED /* OTMLocationManager.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMLocationManager.swift; sourceTree = "<group>"; };
 		B48B50DD1C42B651001ED7E1 /* OTMConstants.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMConstants.swift; sourceTree = "<group>"; };
 		B48B50DF1C42D511001ED7E1 /* MapViewController.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MapViewController.swift; sourceTree = "<group>"; };
 		B48B50E11C42DC2C001ED7E1 /* OTMLocation.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = OTMLocation.swift; sourceTree = "<group>"; };
@@ -66,6 +68,7 @@
 			isa = PBXGroup;
 			children = (
 				B48B50E11C42DC2C001ED7E1 /* OTMLocation.swift */,
+				B47E40261C57AA4B00DB58ED /* OTMLocationManager.swift */,
 			);
 			name = Models;
 			sourceTree = "<group>";
@@ -211,6 +214,7 @@
 			files = (
 				B4AA85A01C3EF37D00807D01 /* LoginViewController.swift in Sources */,
 				B48B50E21C42DC2C001ED7E1 /* OTMLocation.swift in Sources */,
+				B47E40271C57AA4B00DB58ED /* OTMLocationManager.swift in Sources */,
 				B48B50E41C42EFFA001ED7E1 /* ParseClient.swift in Sources */,
 				B48B50E61C431429001ED7E1 /* LocationTableViewController.swift in Sources */,
 				B4273D471C52516100E2AB8D /* OTMClient.swift in Sources */,

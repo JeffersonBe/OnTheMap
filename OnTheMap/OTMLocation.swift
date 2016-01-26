@@ -6,8 +6,10 @@
 //  Copyright © 2016 Jefferson Bonnaire. All rights reserved.
 //
 
-struct OTMLocation {
+import Foundation
 
+struct OTMLocation {
+    
     // MARK: Properties
 
     var createdAt = ""
@@ -35,14 +37,5 @@ struct OTMLocation {
         objectId = dictionary[OTMConstants.JSONResponseKeys.objectId] as! String
         uniqueKey = dictionary[OTMConstants.JSONResponseKeys.uniqueKey] as! String
         updatedAt = dictionary[OTMConstants.JSONResponseKeys.updatedAt] as! String
-    }
-
-    /* Helper: Given an array of dictionaries, convert them to an array of TMDBMovie objects */
-    static func locationsFromResults(results: [[String : AnyObject]]) -> [OTMLocation] {
-        var locations = [OTMLocation]()
-        for result in results {
-            locations.append(OTMLocation(dictionary: result))
-        }
-        return locations
     }
 }

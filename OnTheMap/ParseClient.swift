@@ -10,7 +10,7 @@ import Foundation
 
 extension OTMClient {
 
-    func getLocations(completionHandler: (success: Bool, locations: [OTMLocation]?, errorString: String?) -> Void) {
+    func getLocations(completionHandler: (success: Bool, errorString: String?) -> Void) {
 
         let urlString = OTMConstants.Constants.ParseBaseUrl
         let parameters = ["limit": 100, "order":"-updatedAt"]
@@ -19,18 +19,22 @@ extension OTMClient {
         taskForGETMethod("Parse", urlString: urlString, parameters: parameters) { results, error in
 
             guard (error == nil) else {
-                completionHandler(success: false, locations: nil, errorString: error!.localizedDescription)
+                completionHandler(success: false, errorString: error!.localizedDescription)
                 print("There was an error with your request: \(error)")
                 return
             }
 
-                guard let results = results["results"] as? [[String:AnyObject]] else {
-                    completionHandler(success: false, locations: nil, errorString: nil)
-                    return
-                }
+            guard let results = results["results"] as? [[String:AnyObject]] else {
+                completionHandler(success: false, errorString: nil)
+                return
+            }
 
-                self.locations = OTMLocation.locationsFromResults(results)
-                completionHandler(success: true, locations: self.locations, errorString: nil)
+            for result in results {
+                let location = OTMLocation(dictionary: result as [String:AnyObject])
+                self.manager.locationArray.append(location)
+            }
+
+            completionHandler(success: true, errorString: nil)
         }
     }
 
@@ -117,11 +121,11 @@ extension OTMClient {
 
                 return
             }
-
+            
             guard let objectId = results.first!["objectId"] as? String else {
                 return
             }
-
+            
             self.objectId = objectId
             completionHandler(success: true, errorString: nil)
         }

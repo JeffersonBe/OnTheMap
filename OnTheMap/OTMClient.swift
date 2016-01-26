@@ -25,9 +25,11 @@ class OTMClient: NSObject {
     var facebookAccessToken = ""
 
     /* Parse Client Values */
-    var locations: [OTMLocation] = [OTMLocation]()
     var objectId: String = ""
     var completionHandler : ((success: Bool, errorString: String?) -> Void)? = nil
+
+    /* Model */
+    var manager = OTMLocationManager.sharedInstance
 
     // MARK: Initializers
     override init() {
@@ -205,5 +207,4 @@ class OTMClient: NSObject {
         }
         return Singleton.sharedInstance
     }
-    
 }

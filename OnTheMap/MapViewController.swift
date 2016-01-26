@@ -13,16 +13,13 @@ class MapViewController: UIViewController, MKMapViewDelegate {
 
     @IBOutlet weak var mapView: MKMapView!
     @IBOutlet weak var activityIndicator: UIActivityIndicatorView!
+
     var indicator = CustomUIActivityIndicatorView()
-
-
-    var locations: [OTMLocation] = [OTMLocation]()
+    var manager = OTMLocationManager.sharedInstance
 
     override func viewDidLoad() {
         super.viewDidLoad()
         mapView.delegate = self
-        indicator.startActivity()
-        view.addSubview(indicator)
         refreshLocation()
     }
 
@@ -83,24 +80,29 @@ class MapViewController: UIViewController, MKMapViewDelegate {
         }
     }
 
+    // MARK: MapKit Delegate
+
+    func mapViewWillStartRenderingMap(mapView: MKMapView) {
+        indicator.startActivity()
+        view.insertSubview(indicator, atIndex: 100)
+    }
+
     func mapViewDidFinishRenderingMap(mapView: MKMapView, fullyRendered: Bool) {
         indicator.stopActivity()
         indicator.removeFromSuperview()
     }
 
     func refreshLocation() {
-        OTMClient.sharedInstance().getLocations { success, locations, error in
+        manager.locationArray.removeAll()
+        OTMClient.sharedInstance().getLocations { success, error in
             if success {
-                self.locations = locations!
                 dispatch_async(dispatch_get_main_queue()) {
                     self.mapView.removeAnnotations(self.mapView.annotations)
                     self.mapView.reloadInputViews()
-                    self.populateMap(self.locations)
+                    self.populateMap(self.manager.locationArray)
                 }
             } else {
                 dispatch_async(dispatch_get_main_queue()) {
-                    self.indicator.stopActivity()
-                    self.indicator.removeFromSuperview()
                     let errorAlert = UIAlertController(title: OTMConstants.AppCopy.unableToLoadLocation, message: error, preferredStyle: UIAlertControllerStyle.Alert)
                     errorAlert.addAction(UIAlertAction(title: OTMConstants.AppCopy.dismiss, style: UIAlertActionStyle.Default, handler: nil))
                     self.presentViewController(errorAlert, animated: true, completion: nil)
@@ -110,8 +112,7 @@ class MapViewController: UIViewController, MKMapViewDelegate {
     }
 
     func logout(){
-        self.indicator.startActivity()
-        view.addSubview(indicator)
+        manager.locationArray.removeAll()
         OTMClient.sharedInstance().logoutAndDeleteSession { success, error in
             if success {
                 dispatch_async(dispatch_get_main_queue()) {
@@ -120,8 +121,6 @@ class MapViewController: UIViewController, MKMapViewDelegate {
                 }
             } else {
                 dispatch_async(dispatch_get_main_queue()) {
-                    self.indicator.stopActivity()
-                    self.indicator.removeFromSuperview()
                 let errorAlert = UIAlertController(title: OTMConstants.AppCopy.unableToLogout, message: error, preferredStyle: UIAlertControllerStyle.Alert)
                 errorAlert.addAction(UIAlertAction(title: OTMConstants.AppCopy.dismiss, style: UIAlertActionStyle.Default, handler: nil))
                 self.presentViewController(errorAlert, animated: true, completion: nil)

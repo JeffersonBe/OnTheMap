@@ -13,8 +13,7 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
     @IBOutlet weak var table: UITableView!
     @IBOutlet weak var refreshControl: UIRefreshControl!
     var indicator = CustomUIActivityIndicatorView()
-
-    var locations: [OTMLocation] = [OTMLocation]()
+    var manager = OTMLocationManager.sharedInstance
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -33,7 +32,7 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
 
         /* Get cell type */
         let cellReuseIdentifier = "locationCell"
-        let location = locations[indexPath.row]
+        let location = manager.locationArray[indexPath.row]
         let cell = tableView.dequeueReusableCellWithIdentifier(cellReuseIdentifier) as UITableViewCell!
         cell.textLabel?.text = "\(location.firstName) \(location.lastName)"
         cell.detailTextLabel?.text = location.mediaURL
@@ -41,21 +40,21 @@ class LocationTableViewController: UIViewController, UITableViewDelegate, UITabl
     }
 
     func tableView(tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return locations.count
+        return manager.locationArray.count
     }
 
     func tableView(tableView: UITableView, didSelectRowAtIndexPath indexPath: NSIndexPath) {
-        let location = locations[indexPath.row]
+        let location = manager.locationArray[indexPath.row]
         let app = UIApplication.sharedApplication()
         app.openURL(NSURL(string: location.mediaURL)!)
     }
 
     func refresh(sender:AnyObject) {
+        manager.locationArray.removeAll()
         indicator.startActivity()
         view.addSubview(indicator)
-        OTMClient.sharedInstance().getLocations { success, locations, error in
+        OTMClient.sharedInstance().getLocations { success, error in
             if success {
-                self.locations = locations!
                 dispatch_async(dispatch_get_main_queue()) {
                     self.table.reloadData()
                     self.refreshControl?.endRefreshing()

@@ -42,7 +42,7 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
         locationTextField.delegate = self
         linkShareTextField.delegate = self
 
-        tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap:")
+        tapRecognizer = UITapGestureRecognizer(target: self, action: "handleSingleTap")
         tapRecognizer?.numberOfTapsRequired = 1
 
         cancelButton.layer.cornerRadius = 15
