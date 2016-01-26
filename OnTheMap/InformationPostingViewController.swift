@@ -36,7 +36,6 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
 
     override func viewDidLoad() {
         super.viewDidLoad()
-        linkSubmitView.hidden = true
         mapView.delegate = self
 
         locationTextField.delegate = self
@@ -50,6 +49,10 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
 
     override func viewWillAppear(animated: Bool) {
         super.viewWillAppear(animated)
+
+        /* Hide mapView */
+        self.mapView.alpha = 0.0
+        self.linkSubmitView.alpha = 0.0
 
         /* Add tap recognizer to dismiss keyboard */
         self.addKeyboardDismissRecognizer()
@@ -113,13 +116,14 @@ class InformationPostingViewController: UIViewController, UITextFieldDelegate, M
                 annotations.append(annotation)
 
                 dispatch_async(dispatch_get_main_queue()) {
+                    self.locationSubmitView.fadeOut(duration: 0.0)
                     self.mapView.addAnnotations(annotations)
                     self.mapView.reloadInputViews()
                     self.mapView.showAnnotations(self.mapView.annotations, animated: true)
-                    self.locationSubmitView.hidden = true
-                    self.linkSubmitView.hidden = false
+                    self.linkSubmitView.fadeIn(duration: 2.0)
                     self.indicator.stopActivity()
                     self.indicator.removeFromSuperview()
+                    self.mapView.fadeIn(duration: 2.0)
                 }
             }
         })
@@ -245,4 +249,20 @@ extension InformationPostingViewController {
         let keyboardSize = userInfo![UIKeyboardFrameEndUserInfoKey] as! NSValue // of CGRect
         return keyboardSize.CGRectValue().height
     }
+}
+
+public extension UIView {
+
+    func fadeIn(duration duration: NSTimeInterval = 1.0) {
+        UIView.animateWithDuration(duration, animations: {
+            self.alpha = 1.0
+        })
+    }
+
+    func fadeOut(duration duration: NSTimeInterval = 2.0) {
+        UIView.animateWithDuration(duration, animations: {
+            self.alpha = 0.0
+        })
+    }
+    
 }
